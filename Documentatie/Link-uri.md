@@ -1,3 +1,6 @@
+> Acest fisier foloseste **MARKDOWN**
+> Pentru mai multe informatii: 
+> https://guides.github.com/features/mastering-markdown/
 #Idee de baza:
 https://code.tutsplus.com/tutorials/how-to-create-a-simple-web-based-chat-application--net-5931
 
