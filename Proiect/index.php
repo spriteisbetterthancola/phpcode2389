@@ -8,6 +8,11 @@
 	</head>
 	<script>
 		//window.setInterval(refreshFunction, 2500);//Refresh chat la fiecare 2.5 s
+		function getChatData()
+		{
+			data = "Chat Text";
+			return data;
+		}
 	</script>
 	<body>
 		<div id="wrapper">
