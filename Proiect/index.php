@@ -4,15 +4,10 @@
 		<title>Chat - Customer Module</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		
+		<script src="script.js"></script>
 	</head>
 	<script>
-		//window.setInterval(refreshFunction, 2500);//Refresh chat la fiecare 2.5 s
-		function getChatData()
-		{
-			data = "Chat Text";
-			return data;
-		}
+		window.setInterval(refreshFunction(), 2500);//Refresh chat la fiecare 2.5 s
 	</script>
 	<body>
 		<div id="wrapper">
