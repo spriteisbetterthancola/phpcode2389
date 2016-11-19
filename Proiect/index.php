@@ -12,7 +12,12 @@
 	<body>
 		<div id="wrapper">
 		    <div id="menu">
-		        <p class="welcome">Welcome, <b></b></p>
+		        <p class="welcome">Welcome, 
+		        	<p id="username">
+		        		<input type="text" name="name" id="userID" onblur="inputTextToDiv(this)">
+		        	</p>
+		        </p>
+
 		        <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
 		        <div style="clear:both"></div>
 		    </div>
