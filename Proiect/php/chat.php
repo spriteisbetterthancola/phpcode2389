@@ -4,7 +4,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET");
 {
 	if(isset($_GET['text']))
 	{
-		echo "Scriere";
+		//echo "Scriere";
 	    $text = $_GET['text'];
 	    if(isset($_GET['name']))
 	    {
@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET");
 	//if(isset($_SESSION['text']))
 	else
 	{
-		echo "Afisare";
+		//echo "Afisare";
 		$fp = fopen("logs/log.txt", 'r');
 		while (!feof($fp)) {
 			$text = fread($fp, 100);
