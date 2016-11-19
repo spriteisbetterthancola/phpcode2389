@@ -8,7 +8,7 @@ function refreshFunction()
 			document.getElementById("chatbox").innerHTML = this.responseText;
 	    }
 	  };
-	  xhttp.open("GET", "php/chat.php", true);
+	  xhttp.open("POST", "php/chat.php", true);
 	  xhttp.send();
 	return;
 }
@@ -20,8 +20,13 @@ function pushMsg()
 	};
 	reqString = "php/chat.php?text=";
 	reqString += document.getElementById("usermsg").value;//strip slashes html etc
-	xhttp.open("GET", reqString, true);
+	reqString += "&name=" + document.getElementById("userID").value;
+	xhttp.open("POST", reqString, true);
 	xhttp.send();
 	document.getElementById("usermsg").value = "";
 }
 
+function inputTextToDiv(elem)
+{
+	elem.visibility="Hidden";
+}
