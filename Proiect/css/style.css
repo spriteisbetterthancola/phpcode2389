@@ -44,6 +44,13 @@ a {
     float: left;
     text-align: left;
 }
+
+/*Added by MRTS*/
+#username2 {
+    padding-top:3px; 
+    padding-bottom: 3px; 
+    font-weight: bold;
+}
 #usermsg {
     width:395px;
     border:1px solid #ACD8F0; }
