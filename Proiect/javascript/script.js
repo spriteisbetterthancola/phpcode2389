@@ -28,5 +28,11 @@ function pushMsg()
 
 function inputTextToDiv(elem)
 {
-	elem.visibility="Hidden";
+	elem.style.display = "none";
+	var para = document.createElement("P");                       // Create a <p> element
+	//para.style = "padding-top:3px; padding-bottom: 3px; font-weight: bold;";
+	para.id = "username2";
+	var t = document.createTextNode(elem.value);		          // Create a text node
+	para.appendChild(t);                                          // Append the text to <p>
+	elem.parentNode.appendChild(para);                              // Append <p> to parent of elem
 }
