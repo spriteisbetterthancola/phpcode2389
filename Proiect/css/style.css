@@ -38,6 +38,12 @@ a {
     border:1px solid #ACD8F0;
     overflow:auto; }
   
+
+#username {
+    width: 350px;
+    float: left;
+    text-align: left;
+}
 #usermsg {
     width:395px;
     border:1px solid #ACD8F0; }
@@ -47,6 +53,10 @@ a {
 .error { color: #ff0000; }
   
 #menu { padding:12.5px 25px 12.5px 25px; }
+.welcome {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
   
 .welcome { float:left; }
   
