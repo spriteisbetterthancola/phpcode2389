@@ -6,6 +6,9 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		
 	</head>
+	<script>
+		//window.setInterval(refreshFunction, 2500);//Refresh chat la fiecare 2.5 s
+	</script>
 	<body>
 		<div id="wrapper">
 		    <div id="menu">
