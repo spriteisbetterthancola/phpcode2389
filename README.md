@@ -4,7 +4,7 @@ Am decis sa implementez acest site din nevoia de avea o modalitate usoara de a c
 Elementele cele mai importante pe care pun accentul sunt simplitatea de utilizare (user friendly) si usurinta de a accesa o conversatie (prin scanarea unui cod QR sau introducerea unui URL in browser).
 Ceea ce deosebeste acest serviciu de altele existente pe piata este eliminarea nevoii de logare cu un cont de social media (Facebook, Twitter, Google etc.) sau crearea unui profil.
 ## Scurta descriere:
-	Site-ul dezvoltat are ca scop facilitarea conversatiilor in cadrul unui grup. 
+Site-ul dezvoltat are ca scop facilitarea conversatiilor in cadrul unui grup. 
 Acesta este util deoarece accesarea unei conversatii de grup nu necesita inregistrare ci doar un link(URL), astfel fiind perfect pentru comunicarea in cadrul unor intalniri, conferinte etc.
 In cadrul conversatiei un utilizator isi poate alege orice username doreste. 
 Ca functionalitate sit-ul ofera posibilitatea de a crea o conversatie noua sau de a participa la o conversatie deja creata. 
