@@ -10,6 +10,14 @@ In cadrul conversatiei un utilizator isi poate alege orice username doreste.
 Ca functionalitate sit-ul ofera posibilitatea de a crea o conversatie noua sau de a participa la o conversatie deja creata. 
 Pentru aceasta avem doua pagini: una de start (prezentata utilizatorului cand acceseaza prima data site-ul) si o alta pagina de conversatie.
 
+## Tehnologii existente:
+Exista multe servicii de chat online pe piata, dar majoritatea necesita: 
+	* inregistrare cu utilizator + parola;
+	* inregistrare cu un cont de Facebook, Twitter sau altele;
+	* instalarea unui client de Desktop (spre exemplu TeamSpeak, RaidCall sau Mumble);
+	* instalarea unei aplicatii de mobil (Snapchat, Kik, Yahoo Messenger etc.)
+O aplicatie similara ar fi Omegle, dar aceasta nu permite un chat de grup.
+
 ## Tehnologii folosite:
 	Pentru realizare s-au folosit:
 	* PHP - Stocarea conversatiilor pe server si altele 
