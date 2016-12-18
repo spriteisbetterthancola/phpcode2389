@@ -1,0 +1,12 @@
+	Config.xml
+	
+	Fisier xml ce va trebui updatat la stergerea unei conversatii si la care se va face append la crearea unei conversatii noi .
+	Structura acestuia va fi urmatoarea:
+	id_conversatie ,nume_log
+	
+	De exemplu pentru id_conversatie 000001 si nume_log log1.txt structura va arata asa:
+	
+	<id_conversatie> 000001 </id_conversatie>
+	<nume_log> log1.txt </nume_log>
+
+	
