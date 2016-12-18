@@ -261,7 +261,7 @@ function divide_poly_step($m, $g)
 	$r = array();// $r = $p * $q[n]
 	//Impartim p la q astfel:
 		//Inmultim $g cu coeficientul dominant al lui $m
-		//BUG GRESIT! Innultim $g cu TERMENUL dominant al lui $m
+		//BUG GRESIT! InMultim $g cu TERMENUL dominant al lui $m
 	$grad_m = count($m) - 1;
 
 	//BUG trebuie sa inmultim cu a^m*x^n nu doar cu a^m!!!
@@ -279,7 +279,7 @@ function divide_poly_step($m, $g)
 
 //$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
 
-//Functia genereaza polinomul mesajului si il inmulteste cu x^(gpm_ec_cw)
+//Functia genereaza polinomul mesajului
 function gen_poly_msg($gpm_poly_string)
 {
 	$gpm_poly_dec = array();
@@ -373,9 +373,11 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 	return $qr_ec_blocks;
 }
 
-function print_polin2($polin)
-{
+/*
+ function print_polin2($polin)
+ {
 	$n = count($polin);
-}
+ }
+*/
 
 ?>
