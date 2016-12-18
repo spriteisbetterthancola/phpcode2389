@@ -1,0 +1,15 @@
+	Structura fiecarei conversatii 
+	
+		Fiecarei  conversatii nou create ii va fi atribuit un fisier .xml. Numele acestui fisier  va fi strans legat de id-ul primit la crearea conversatiei.
+	De exemplu daca id-ul unei conversatii este 000012,toate detaliie legate de conversatia respectiva vor fi salvate in fisierul 12.xml.
+	Structura fisierului xx.xml va fi urmatoarea:
+		<conversation>
+			<configuration>
+				<creation_date>	???? </creation_date>
+			</configuration>
+			<message>
+				<message_body> ???? </message_body>  #sau <m_body></m_body>
+				<sender_name> ??? </sender_name>
+				<timestamp> ??? </timestamp>
+			</message>
+		</conversation>

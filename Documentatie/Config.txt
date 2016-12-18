@@ -1,12 +1,18 @@
 	Config.xml
 	
-	Fisier xml ce va trebui updatat la stergerea unei conversatii si la care se va face append la crearea unei conversatii noi .
+	Fisier xml ce va trebui updatat la stergerea unei conversatii si la care se va face append la crearea unei conversatii noi.
 	Structura acestuia va fi urmatoarea:
-	id_conversatie ,nume_log
 	
-	De exemplu pentru id_conversatie 000001 si nume_log log1.txt structura va arata asa:
+	<entry>
+		<entry_id>???? </entry_id>
+		<log_name>???<log_name>
+	</entry>
 	
-	<id_conversatie> 000001 </id_conversatie>
-	<nume_log> log1.txt </nume_log>
-
-	
+	De exemplu pentru entry_id 000001 si log_name 1.xml structura va arata asa:
+	<root>
+		...
+		<entry>
+			<entry_id>000001 </entry_id>
+			<log_name>log_1.xml<log_name>
+		</entry>
+	</root>
