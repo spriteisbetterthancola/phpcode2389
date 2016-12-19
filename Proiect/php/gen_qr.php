@@ -112,10 +112,17 @@ function generate_qr($text)
 		//4-H desparte codul in o grupa cu 4 blocuri a cate 9 cuvinte de cod fiecare
 		//Un cuvant de cod are 8 biti din mesajul codat
 	$qr_code_blocks = qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_level);
+	unset($encoded_data);
 		//var_dump($qr_code_blocks);//afisare blocuri
 	$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
 
-	// 4 - 
+	// 4 - Interclasare date
+	$qr_data = qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version);
+	echo $qr_data;
+	//Free memory
+	//unset($qr_code_blocks);
+	//unset($qr_ec_blocks);
+
 }
 
 function intdiv_1($a, $b){

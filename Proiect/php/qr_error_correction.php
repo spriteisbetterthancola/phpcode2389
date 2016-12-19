@@ -401,4 +401,84 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 	return $qr_ec_blocks;
 }
 
+/*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * SFARSIT FUNCTII CORECTIE ERORI  * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ */
+
+function qr_interleave_across($qr_interleave_blocks)
+{
+	$qia_r = array();
+	$qia_blocks = count($qr_interleave_blocks[1]) + count($qr_interleave_blocks[2]);
+	$qia_data = array();
+	for($qia_i = 1; $qia_i <= count($qr_interleave_blocks[1]); $qia_i++)//Grupul 1
+	{
+		$qia_data[$qia_i] = $qr_interleave_blocks[1][$qia_i];
+	}
+	
+	for($qia_j = 1; $qia_j <= count($qr_interleave_blocks[2]); $qia_j++)//Grupul 2
+	{
+		$qia_data[$qia_i] = $qr_interleave_blocks[2][$qia_j];
+		$qia_i++;
+	}
+	unset($qr_interleave_blocks);
+
+	$qia_has_data = true;
+	$qia_c = 0;
+	$qia_j = 1;
+	//BUG - Infinite loop
+	while($qia_has_data == true)
+	{
+		$qia_has_data = false;
+		for($qia_i = 1; $qia_i <= $qia_blocks; $qia_i++)
+		{
+			if(isset($qia_data[$qia_i][$qia_j]))
+			{
+				$qia_r[$qia_c++] = $qia_data[$qia_i][$qia_j];
+				$qia_has_data = true;
+			}
+		}
+		$qia_j++;
+	}
+	return $qia_r;
+}
+function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
+{
+	$qid_data = array();
+	$qid_data[1] = qr_interleave_across($qr_code_blocks);
+	$qid_data[2] = qr_interleave_across($qr_ec_blocks);
+	echo "Done!";
+	$qid_res_string = "";
+	for($i = 1; $i < 3; $i++)
+	//avem 2 seturi de date de convertit
+	//qr_data[1] si qr_data[2]
+	{
+		$qid_n = count($qid_data[$i]);
+		for($j = 0; $j < $qid_n; $j++)
+		{
+			$qid_aux = decbin($qid_data[$i][$j]);
+			while(sizeof($qid_aux < 7))
+			{
+				$qid_aux = "0" . $qid_aux;
+			}
+			$qid_res_string = $qid_res_string . $qid_aux;
+		}
+	}
+
+	//Remainder bits
+	$qid_rem_bits = array (
+		1	=> 0, 2		=> 7, 3		=> 7, 4		=> 7, 5		=> 7, 6		=> 7, 7		=> 0, 8		=> 0, 9		=> 0, 10	=> 0, 
+		11	=> 0, 12	=> 0, 13	=> 0, 14	=> 3, 15	=> 3, 16	=> 3, 17	=> 3, 18	=> 3, 19	=> 3, 20	=> 3, 
+		21	=> 4, 22	=> 4, 23	=> 4, 24	=> 4, 25	=> 4, 26	=> 4, 27	=> 4, 28	=> 3, 29	=> 3, 30	=> 3, 
+		31	=> 3, 32	=> 3, 33	=> 3, 34	=> 3, 35	=> 0, 36	=> 0, 37	=> 0, 38	=> 0, 39	=> 0, 40	=> 0);
+	for($i = 0; $i < $qid_rem_bits[$qr_version]; $i++)
+	{
+		$qid_res_string = $qid_res_string . "0";
+	}
+	return $qid_res_string;
+}
 ?>
