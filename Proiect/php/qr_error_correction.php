@@ -1,4 +1,7 @@
 <?php 
+//TODO 0. Crush that bug
+//TODO 1. Finish the code!!!
+//TODO 1. Redenumire functii si parametri pentru simularea unui namespace.
 
 // functia intoarce valoarea log2(a) pentru campuri Galois 256
 /* Generare tabele log - antilog
@@ -185,7 +188,7 @@ function  qr_alpha_pol($polin)
 }
 
 //afiseaza polinomul dat in notatia alfa
-function print_polin($polin)
+function print_polin($polin, $pp_al_mode = true)
 {
 	$n = max(array_keys($polin));
 	for($i = $n ; $i > 0; $i--)
@@ -194,7 +197,14 @@ function print_polin($polin)
 		{
 			if($polin[$i] != 0)
 			{
-				printf("a<sup>%d</sup>x<sup>%d</sup>", $polin[$i], $i);
+				if($pp_al_mode)
+				{
+					printf("a<sup>%d</sup>x<sup>%d</sup>", $polin[$i], $i);
+				}
+				else
+				{
+					echo "{$polin[$i]}x<sup>{$i}</sup>";
+				}
 			}
 			else
 				printf("x<sup>%d</sup>", $i);
@@ -204,10 +214,19 @@ function print_polin($polin)
 			}
 		}
 	}
-	if(isset($polin[0]))
-		printf("a<sup>%d</sup>", $polin[$i]);
-	//afiseaza ultimul termen
 
+	//afiseaza ultimul termen
+	if(isset($polin[0]))
+	{
+		if($pp_al_mode)
+		{
+			printf("a<sup>%d</sup>", $polin[$i]);
+		}
+		else
+		{
+			echo $polin[$i];
+		}
+	}
 	echo "<br>";
 }
 
@@ -258,21 +277,26 @@ function multiply_polynoms($p, $q)
 //$g - Polinom de generare
 function divide_poly_step($m, $g)
 {
-	$r = array();// $r = $p * $q[n]
+	$dps_r = array();// $r = $p * $q[n]
 	//Impartim p la q astfel:
 		//Inmultim $g cu coeficientul dominant al lui $m
 		//BUG GRESIT! InMultim $g cu TERMENUL dominant al lui $m
-	$grad_m = count($m) - 1;
-
+	$dps_grad_m = count($m) - 1;
+	$dps_grad_g = count($g) - 1;
 	//BUG trebuie sa inmultim cu a^m*x^n nu doar cu a^m!!!
-	$g = multiply_polynoms($g, array(0 => $m[$grad_m]));
+	//ATENTIE LA GRADUL LUI $g. Acesta trebuie sa scada!
+	$dps_lead_term = poly_gen_x_pow_n($dps_grad_m - $dps_grad_g);
+	$g = multiply_polynoms($g, $dps_lead_term);
+	$g = multiply_polynoms($g, array(0 => $m[$dps_grad_m]));
+	//echo "<br>M: ";	print_polin($m, false);	echo "<br>G: ";	print_polin($g, false); //DEBUG
 	// Facem XOR intre coeficientii lui $m si $g si punem rezultatul in $r
-	for($i = 0; $i < $grad_m; $i++)
+	for($i = 0; $i < $dps_grad_m; $i++)
 	{
-		$r[$i] = $g[$i] ^ $m[$i];
+		$dps_r[$i] = $g[$i] ^ $m[$i];
 	}
-	unset($r[$grad_m]);//stergem primul coeficient deoarece este 0
-	return $r;
+	unset($dps_r[$dps_grad_m]);//stergem primul coeficient deoarece este 0
+	//echo "<br>R: ";	print_polin($dps_r, false); // DEBUG
+	return $dps_r;
 }
 
 
@@ -333,25 +357,27 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 	//var_dump($nr_blocuri);
 	//var_dump($qr_code_blocks);
 	$qr_code_dec = array(1 => array_fill(1, 4, array()), 2 => array_fill(1, 4, array()));
-	for($b = 1; $b <= 2; $b++)
+	
+	//$grad_poly_mesaj = count($qr_code_blocks[$b][$i]) - 1;
+	//$poly_gen = multiply_polynoms($poly_gen, poly_gen_x_pow_n($grad_poly_mesaj));
+	
+
+	for($b = 1; $b <= 2; $b++)//pt fiecare din cele 2 grupe
 	{
-		for ($i = 1; $i <= $nr_blocuri[$b]; $i++)
+		for ($i = 1; $i <= $nr_blocuri[$b]; $i++)//pt fiecare bloc in parte
 		{
-			$cuvinte_pe_bloc = count($qr_code_blocks[$b][$i]);
+			//1. Generare polinom mesaj
 			$poly_mesaj = gen_poly_msg($qr_code_blocks[$b][$i]);
 			//DEBUG
 			$qr_code_dec[$b][$i] = $poly_mesaj;
 			//!DEBUG
 
-			//1. Generare polinom mesaj
-			$poly_gen = multiply_polynoms($poly_gen, poly_gen_x_pow_n(count($poly_mesaj) - 1));
-			//BUG se inmulteste de nr blocuri ori, de asta apare 0 la sfarsit
-
-
 			//2. Inmultim mesajul cu x^$ec_per_block. Pentru asta generam polinomul x^ec_per_block
 			$poly_mesaj = multiply_polynoms($poly_mesaj, poly_gen_x_pow_n($ec_per_block));
-
 			//Divide mesajul cu polinomul de generare de $cuvinte_pe_bloc ori
+			$cuvinte_pe_bloc = count($qr_code_blocks[$b][$i]);
+			//print_polin($poly_mesaj);
+			// echo "<br>b = {$b} | i = {$i} | cpb = {$cuvinte_pe_bloc}"; // DEBUG
 			for($j=0; $j<$cuvinte_pe_bloc; $j++)
 			{
 				$poly_mesaj = divide_poly_step($poly_mesaj, $poly_gen);
@@ -359,6 +385,7 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 			$qr_ec_blocks[$b][$i] = $poly_mesaj;
 		}
 	}
+	/*
 	var_dump($qr_code_blocks[1][1]);
 	echo "Data:<br>";
 	//print_polin(qr_alpha_pol($qr_code_dec[1][1]));
@@ -369,15 +396,9 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 	print_polin($poly_gen);
 
 	echo "EC_CODE: <BR>";
-	print_polin(qr_alpha_pol($qr_ec_blocks[1][1]));
+	print_polin($qr_ec_blocks[1][1], false);
+	*/
 	return $qr_ec_blocks;
 }
-
-/*
- function print_polin2($polin)
- {
-	$n = count($polin);
- }
-*/
 
 ?>
