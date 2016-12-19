@@ -114,6 +114,8 @@ function generate_qr($text)
 	$qr_code_blocks = qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_level);
 		//var_dump($qr_code_blocks);//afisare blocuri
 	$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
+
+	// 4 - 
 }
 
 function intdiv_1($a, $b){
