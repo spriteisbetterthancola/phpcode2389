@@ -413,7 +413,12 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 function qr_interleave_across($qr_interleave_blocks)
 {
 	$qia_r = array();
-	$qia_blocks = count($qr_interleave_blocks[1]) + count($qr_interleave_blocks[2]);
+	$qia_blocks = count($qr_interleave_blocks[1]);
+	if(isset($qr_interleave_blocks[2]))
+	{
+		$qia_blocks = $qia_blocks + count($qr_interleave_blocks[2]);
+	}
+	
 	$qia_data = array();
 	for($qia_i = 1; $qia_i <= count($qr_interleave_blocks[1]); $qia_i++)//Grupul 1
 	{
@@ -448,26 +453,36 @@ function qr_interleave_across($qr_interleave_blocks)
 }
 function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 {
+	if(isset($qr_ec_blocks[2]) == FALSE)
+	{
+		$qr_ec_blocks[2] = array();
+	}
 	$qid_data = array();
 	$qid_data[1] = qr_interleave_across($qr_code_blocks);
 	$qid_data[2] = qr_interleave_across($qr_ec_blocks);
-	echo "Done!";
 	$qid_res_string = "";
-	for($i = 1; $i < 3; $i++)
-	//avem 2 seturi de date de convertit
-	//qr_data[1] si qr_data[2]
+	
+	$qid_n = count($qid_data[1]);
+	for($j = 0; $j < $qid_n; $j++)
 	{
-		$qid_n = count($qid_data[$i]);
-		for($j = 0; $j < $qid_n; $j++)
-		{
-			$qid_aux = decbin($qid_data[$i][$j]);
-			while(sizeof($qid_aux < 7))
-			{
-				$qid_aux = "0" . $qid_aux;
-			}
-			$qid_res_string = $qid_res_string . $qid_aux;
-		}
+		$qid_res_string = $qid_res_string . $qid_data[1][$j];
 	}
+	
+	//avem 1 set de date de convertit
+	//qr_data[2]
+	$qid_n = count($qid_data[2]);
+	for($j = 0; $j < $qid_n; $j++)
+	{
+		$qid_aux = decbin($qid_data[2][$j]);
+		$qid_len = strlen($qid_aux);
+		while($qid_len < 7)
+		{
+			$qid_aux = "0" . $qid_aux;
+			$qid_len = strlen($qid_aux);
+		}
+		$qid_res_string = $qid_res_string . $qid_aux;
+	}
+
 
 	//Remainder bits
 	$qid_rem_bits = array (

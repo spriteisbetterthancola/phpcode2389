@@ -2,6 +2,11 @@
 <?php require_once "qr_error_correction.php"; ?>
 <?php
 //Generator QR
+//generate_qr("HELLO WORLD");//DEBUG
+
+
+
+
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
 	$lines = 3;
@@ -118,7 +123,7 @@ function generate_qr($text)
 
 	// 4 - Interclasare date
 	$qr_data = qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version);
-	echo $qr_data;
+	var_dump($qr_data);
 	//Free memory
 	//unset($qr_code_blocks);
 	//unset($qr_ec_blocks);
