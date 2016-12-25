@@ -435,7 +435,7 @@ function qr_interleave_across($qr_interleave_blocks)
 	$qia_has_data = true;
 	$qia_c = 0;
 	$qia_j = 1;
-	//BUG - Infinite loop
+	//BUG - Pierzi 4 blocuri de EC WTF
 	while($qia_has_data == true)
 	{
 		$qia_has_data = false;
@@ -449,6 +449,7 @@ function qr_interleave_across($qr_interleave_blocks)
 		}
 		$qia_j++;
 	}
+	var_dump($qia_r);
 	return $qia_r;
 }
 function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
@@ -482,7 +483,6 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 		}
 		$qid_res_string = $qid_res_string . $qid_aux;
 	}
-
 
 	//Remainder bits
 	$qid_rem_bits = array (

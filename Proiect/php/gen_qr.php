@@ -1,11 +1,8 @@
 <pre>
 <?php require_once "qr_error_correction.php"; ?>
+<?php require_once "qr_matrix_generator.php"; ?>
 <?php
 //Generator QR
-//generate_qr("HELLO WORLD");//DEBUG
-
-
-
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
@@ -120,14 +117,19 @@ function generate_qr($text)
 	unset($encoded_data);
 		//var_dump($qr_code_blocks);//afisare blocuri
 	$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
-
+	//var_dump($qr_ec_blocks);
 	// 4 - Interclasare date
 	$qr_data = qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version);
-	var_dump($qr_data);
+	//var_dump($qr_data);
 	//Free memory
-	//unset($qr_code_blocks);
-	//unset($qr_ec_blocks);
+	unset($qr_code_blocks);
+	unset($qr_ec_blocks);
 
+	// 5 - Plasare in matrice
+	$qr_matrix = qr_matrix_gen_empty($qr_version);
+	var_dump(strlen($qr_data));
+	$qr_matrix = qr_matrix_place_data($qr_matrix, $qr_data);//TODO Breakpoint
+	var_dump(ascii_print($qr_matrix));
 }
 
 function intdiv_1($a, $b){
@@ -174,9 +176,10 @@ function alfa_encode($text)
 function ascii_print($matrix)
 {
 	$output = "<pre>";
-	for ($i=0, $lines = sizeof($matrix); $i<$lines; $i++)	{
-		for ($j=0, $colums = sizeof($matrix[$i]); $j<$colums; $j++) {
-			if ($matrix[$i][$j]==1) {
+	for ($i=0, $lines = count($matrix); $i<$lines; $i++)	{
+		for ($j=0, $colums = count($matrix[$i]); $j<$colums; $j++) {
+			///*
+			if ($matrix[$i][$j] % 2 == 1) {
 				$output .= "#";
 			}
 			else 
@@ -186,6 +189,8 @@ function ascii_print($matrix)
 			if($j<$lines-1) {
 				$output .= " ";
 			}
+			//*/
+			//$output .= $matrix[$i][$j];
 		}
 		$output .= "\n";
 	}
