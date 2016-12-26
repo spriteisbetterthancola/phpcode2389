@@ -230,7 +230,7 @@ function qr_matrix_place_data($qr_matrix, $qr_data)
 	$qpd_next_x = $qpd_matrix_size - 1;
 	$qpd_next_y = $qpd_matrix_size - 1;
 	$qpd_data_count = strlen($qr_data);
-	$log = fopen("log.txt", "w");
+	//$log = fopen("log.txt", "w"); // DEBUG
 
 	while($qpd_data_i < $qpd_data_count)
 	{
@@ -243,9 +243,11 @@ function qr_matrix_place_data($qr_matrix, $qr_data)
 			$qpd_value = $qpd_value | QRM_WHITE;
 		}
 		$qr_matrix[$qpd_next_y][$qpd_next_x] = $qr_data[$qpd_data_i];
-		fwrite($log, "[{$qpd_next_y}][{$qpd_next_x}] = {$qr_data[$qpd_data_i]}\n");
+		//fwrite($log, "[{$qpd_next_y}][{$qpd_next_x}] = {$qr_data[$qpd_data_i]}\n");
 		$qpd_next_valid = 0;
-		while($qpd_next_valid == 0)
+		$qpd_data_i++;
+		while($qpd_data_i < $qpd_data_count && $qpd_next_valid == 0)
+		//while($qpd_next_valid == 0)
 		{
 			if(($qpd_direction & $qpd_up) != 0) {
 				if(($qpd_direction & $qpd_right) != 0)
@@ -260,7 +262,7 @@ function qr_matrix_place_data($qr_matrix, $qr_data)
 					if(($qpd_next_x == 7) && ($qpd_next_y == 9))
 					{
 						//Exceptie. Trebuie sa ne deplasam cu 2 module la stanga
-						$qpd_next_y = $qpd_next_y - 2;
+						$qpd_next_x = $qpd_next_x - 2;
 						$qpd_direction = $qpd_down | $qpd_right;
 					}
 					else {
@@ -302,7 +304,7 @@ function qr_matrix_place_data($qr_matrix, $qr_data)
 				$qpd_next_valid = 1;
 			}
 		}//End While $qpd_next_vali
-		$qpd_data_i++;
+
 	}//End While 2
 	return $qr_matrix;
 }
