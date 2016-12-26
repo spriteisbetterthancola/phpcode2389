@@ -382,7 +382,11 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 			{
 				$poly_mesaj = divide_poly_step($poly_mesaj, $poly_gen);
 			}
-			$qr_ec_blocks[$b][$i] = $poly_mesaj;
+			//DEVNOTE Deoarece Covintele de cod incep de pe pozitia 1, vom face si restul
+			// Impartirii sa inceapa de pe pozitia 1
+			$qr_ec_blocks[$b][$i] = multiply_polynoms($poly_mesaj, poly_gen_x_pow_n(1));
+			unset($qr_ec_blocks[$b][$i][0]);
+			//$qr_ec_blocks[$b][$i] = $poly_mesaj;
 		}
 	}
 	/*
@@ -431,11 +435,9 @@ function qr_interleave_across($qr_interleave_blocks)
 		$qia_i++;
 	}
 	unset($qr_interleave_blocks);
-
 	$qia_has_data = true;
 	$qia_c = 0;
 	$qia_j = 1;
-	//BUG - Pierzi 4 blocuri de EC WTF
 	while($qia_has_data == true)
 	{
 		$qia_has_data = false;
@@ -449,7 +451,6 @@ function qr_interleave_across($qr_interleave_blocks)
 		}
 		$qia_j++;
 	}
-	var_dump($qia_r);
 	return $qia_r;
 }
 function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
@@ -468,15 +469,19 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	{
 		$qid_res_string = $qid_res_string . $qid_data[1][$j];
 	}
-	
+
+	//$dbg_c = strlen($qid_res_string); echo "qid_res_string_count {$dbg_c}<br>";//DEBUG
+
 	//avem 1 set de date de convertit
 	//qr_data[2]
+	
 	$qid_n = count($qid_data[2]);
+
 	for($j = 0; $j < $qid_n; $j++)
 	{
 		$qid_aux = decbin($qid_data[2][$j]);
 		$qid_len = strlen($qid_aux);
-		while($qid_len < 7)
+		while($qid_len < 8)
 		{
 			$qid_aux = "0" . $qid_aux;
 			$qid_len = strlen($qid_aux);
@@ -484,6 +489,7 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 		$qid_res_string = $qid_res_string . $qid_aux;
 	}
 
+	//$dbg_c = strlen($qid_res_string);	echo "qid_res_string_count {$dbg_c}<br>";//DEBUG
 	//Remainder bits
 	$qid_rem_bits = array (
 		1	=> 0, 2		=> 7, 3		=> 7, 4		=> 7, 5		=> 7, 6		=> 7, 7		=> 0, 8		=> 0, 9		=> 0, 10	=> 0, 
@@ -494,6 +500,7 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	{
 		$qid_res_string = $qid_res_string . "0";
 	}
+
 	return $qid_res_string;
 }
 ?>
