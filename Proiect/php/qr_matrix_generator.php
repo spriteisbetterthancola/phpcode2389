@@ -217,7 +217,7 @@ function qr_matrix_gen_empty($qr_version)
 }// Gen empty matrix
 
 //$qr_matrix = $qr_matrix_place_data($qr_matrix, $qr_data);
-function qr_matrix_place_data($qr_matrix, $qr_data)
+function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 {
 	$qpd_up = 1;
 	$qpd_down = 2;
@@ -306,6 +306,19 @@ function qr_matrix_place_data($qr_matrix, $qr_data)
 		}//End While $qpd_next_vali
 
 	}//End While 2
-	return $qr_matrix;
+	//return $qr_matrix;
 }
+
+
+//Functia calculeaza masca optima pentru matricea $qr_matrix,
+//		o aplica si returneaza masca aplicata
+
+function qr_matrix_mask_data(&$qr_matrix)
+{
+	$qr_data_mask = 0;
+
+	return $qr_data_mask;
+}
+
+
 ?>

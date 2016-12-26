@@ -6,16 +6,12 @@
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
-	$lines = 3;
-	$colums = 3;
-	$M = array_fill(0, $lines, array_fill(0, $colums, 1));
-	$M[1][1] = 0;
-	//echo ascii_print($M);
-	//$var = ascii_print($M);
-	//echo qr_log(0);
 	if(isset($_GET["text"]))
 	{
+		$script_time = microtime(true);
 		generate_qr($_GET["text"]);
+		$script_time = microtime(true) - $script_time;
+		echo "Execution time: {$script_time}[s]<br>";
 	}
 	///* DEBUG STUFFS
 	/*
@@ -128,8 +124,8 @@ function generate_qr($text)
 	// 5 - Plasare in matrice
 	
 	$qr_matrix = qr_matrix_gen_empty($qr_version);
-	$qr_matrix = qr_matrix_place_data($qr_matrix, $qr_data);
-
+	qr_matrix_place_data($qr_matrix, $qr_data);
+	$qr_data_mask = qr_matrix_mask_data($qr_matrix);
 	var_dump(ascii_print($qr_matrix));
 }
 
