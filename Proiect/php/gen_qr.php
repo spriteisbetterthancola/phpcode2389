@@ -126,9 +126,10 @@ function generate_qr($text)
 	unset($qr_ec_blocks);
 
 	// 5 - Plasare in matrice
+	
 	$qr_matrix = qr_matrix_gen_empty($qr_version);
-	var_dump(strlen($qr_data));
-	$qr_matrix = qr_matrix_place_data($qr_matrix, $qr_data);//TODO Breakpoint
+	$qr_matrix = qr_matrix_place_data($qr_matrix, $qr_data);
+
 	var_dump(ascii_print($qr_matrix));
 }
 
@@ -179,12 +180,23 @@ function ascii_print($matrix)
 	for ($i=0, $lines = count($matrix); $i<$lines; $i++)	{
 		for ($j=0, $colums = count($matrix[$i]); $j<$colums; $j++) {
 			///*
-			if ($matrix[$i][$j] % 2 == 1) {
-				$output .= "#";
-			}
-			else 
+			if(($matrix[$i][$j] & QRM_RESERVED) != 0)
+				if ($matrix[$i][$j] % 2 == 1) {
+					$output .= "%";
+				}
+				else 
+				{
+					$output .= "`";
+				}
+			else
 			{
-				$output .= " ";
+				if ($matrix[$i][$j] % 2 == 1) {
+					$output .= "#";
+				}
+				else 
+				{
+					$output .= ".";
+				}
 			}
 			if($j<$lines-1) {
 				$output .= " ";
