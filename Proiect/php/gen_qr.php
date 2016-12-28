@@ -4,6 +4,27 @@
 <?php
 //Generator QR
 
+/* Comenteaza linia asta pentru a vedea una din masti [0-7]
+$dbg_mask_nr = 0;
+$dbg_matrix = qr_matrix_gen_empty(4);
+$dbg_data_white = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+$dbg_data_dark = "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+
+while(strlen($dbg_data_white) < 807)
+{
+	$dbg_data_white = $dbg_data_white . "0";
+}
+
+while(strlen($dbg_data_dark) < 807)
+{
+	$dbg_data_dark = $dbg_data_dark . "1";
+}
+
+qr_matrix_place_data($dbg_matrix, $dbg_data_white);
+var_dump(ascii_print($dbg_matrix));
+var_dump(ascii_print(qr_matrix_apply_mask($dbg_matrix, $dbg_mask_nr)));
+//*/
+
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
 	if(isset($_GET["text"]))
@@ -198,7 +219,7 @@ function ascii_print($matrix)
 				$output .= " ";
 			}
 			//*/
-			//$output .= $matrix[$i][$j];
+			//$output .= $matrix[$i][$j] . " ";
 		}
 		$output .= "\n";
 	}
