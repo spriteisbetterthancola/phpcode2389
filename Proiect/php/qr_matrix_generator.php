@@ -230,6 +230,7 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 	$qpd_next_x = $qpd_matrix_size - 1;
 	$qpd_next_y = $qpd_matrix_size - 1;
 	$qpd_data_count = strlen($qr_data);
+
 	//$log = fopen("log.txt", "w"); // DEBUG
 
 	while($qpd_data_i < $qpd_data_count)
@@ -242,12 +243,15 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 		else {
 			$qpd_value = $qpd_value | QRM_WHITE;
 		}
-		$qr_matrix[$qpd_next_y][$qpd_next_x] = $qr_data[$qpd_data_i];
+		//$qr_matrix[$qpd_next_y][$qpd_next_x] = $qr_data[$qpd_data_i];
+		$qr_matrix[$qpd_next_y][$qpd_next_x] = $qpd_value;
+
+		
 		//fwrite($log, "[{$qpd_next_y}][{$qpd_next_x}] = {$qr_data[$qpd_data_i]}\n");
+		
 		$qpd_next_valid = 0;
 		$qpd_data_i++;
 		while($qpd_data_i < $qpd_data_count && $qpd_next_valid == 0)
-		//while($qpd_next_valid == 0)
 		{
 			if(($qpd_direction & $qpd_up) != 0) {
 				if(($qpd_direction & $qpd_right) != 0)
@@ -306,9 +310,16 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 		}//End While $qpd_next_vali
 
 	}//End While 2
+	//fclose($log);
+
 	//return $qr_matrix;
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
+ * * * * * * * * * * * *  DATA MASKING FUNCTIONS   * * * * * * * * * * *
+ * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 //Functia calculeaza masca optima pentru matricea $qr_matrix,
 //		o aplica si returneaza masca aplicata
@@ -316,9 +327,108 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 function qr_matrix_mask_data(&$qr_matrix)
 {
 	$qr_data_mask = 0;
-
+	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
+	for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)
+	{
+		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
+		if($qmm_aux_score < $qmm_min_score)
+		{
+			$qr_data_mask = $qmm_mask_number;
+			$qmm_min_score = $qmm_aux_score;
+		}
+	}
+	$qr_matrix = qr_matrix_apply_mask($qr_matrix, $qr_data_mask);
 	return $qr_data_mask;
 }
 
+function qr_matrix_flip_bit($bit)
+{
+	$bit = $bit ^ QRM_BLACK; // This works because XOR
+	// ^ | 0 | 1
+	// 0 > 0   1
+	// 1 > 1   0
+
+	//QRM_BLACK = 1 -> A XOR QRM_BLACK = NOT A
+	return $bit;
+}
+
+function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
+{
+	$qma_row = count($qr_matrix);
+	$qma_colums = 0;
+	if(isset($qr_matrix[0]))
+	{
+		$qma_colums = count($qr_matrix[0]);
+	}
+	for($row = 0; $row < $qma_row; $row++)
+	{
+		for($column = 0; $column < $qma_colums; $column++)
+		{
+			$qma_flip = false;
+			//Patterns: http://www.thonky.com/qr-code-tutorial/mask-patterns
+			switch ($qr_data_mask) {
+				case 0:
+					if(($row + $column) % 2 == 0)
+					{
+						//Switch the bit there
+						$qma_flip = true;
+					}
+					break;
+				case 1:
+					if($row % 2 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 2:
+					if($column % 3 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 3:
+					if(($row + $column) % 3 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 4:
+					if((($row / 2) + ($column / 3)) % 2 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 5:
+					if((($row * $column) % 2) + (($row * $column) % 3) == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 6:
+					if((($row * $column) % 2) + (($row * $column) % 3) % 2 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				case 7:
+					if((($row + $column) % 2) + (($row * $column) % 3) % 2 == 0)
+					{
+						$qma_flip = true;
+					}
+					break;
+				default:
+					# code...
+					echo "ERROR! Invalid data mask {$qr_data_mask}!";
+					break;
+			}//!switch
+
+			if($qma_flip == true && (($qr_matrix[$row][$column] & QRM_DATA) != 0))//TODO Breakpoint here
+			{
+				$qr_matrix[$row][$column] = qr_matrix_flip_bit($qr_matrix[$row][$column]);
+			}
+		}//!for j
+	}//!for i
+	return $qr_matrix;
+}
 
 ?>
