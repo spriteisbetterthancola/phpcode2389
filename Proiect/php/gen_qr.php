@@ -35,25 +35,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET")
 		$script_time = microtime(true) - $script_time;
 		echo "Execution time: {$script_time}[s]<br>";
 	}
-	///* DEBUG STUFFS
-	/*
-
-	$p7 = array(qr_pow(0), 1);//1
-	$p7 = multiply_polynoms($p7, array(qr_pow(1), 1));//2
-	$p7 = multiply_polynoms($p7, array(qr_pow(2), 1));//3
-	$p7 = multiply_polynoms($p7, array(qr_pow(3), 1));//4
-	print_polin($p7);
-	a1x4 + a15x3 + a54x2 + a120x1 + a64
-	$p7 = multiply_polynoms($p7, array(qr_pow(4), 1));//5
-	$p7 = multiply_polynoms($p7, array(qr_pow(5), 1));//6
-	$p7 = multiply_polynoms($p7, array(qr_pow(6), 1));//7
-	$p7 = multiply_polynoms($p7, array(qr_pow(7), 1));//8
-	$p7 = multiply_polynoms($p7, array(qr_pow(8), 1));//9
-	$alpha = qr_alpha_pol($p7);
-	print_polin($alpha);
-	//print_polin(qr_alpha_pol(multiply_polynoms($p7, array(0,1))));
-	
-	//*/
 }
 ?>
 <?php
