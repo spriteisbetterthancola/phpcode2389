@@ -333,7 +333,7 @@ function qr_matrix_mask_data(&$qr_matrix)
 	 var_dump(ascii_print($dbg_matrix));
 	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
 	//*///!DEBUG
-
+	 echo "Mask #0:<br>";
 	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)
 	{
@@ -343,6 +343,7 @@ function qr_matrix_mask_data(&$qr_matrix)
 		 var_dump(ascii_print($dbg_matrix));
 		 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
 		//*///!DEBUG
+		 echo "Mask #$qmm_mask_number:<br>";
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
 		if($qmm_aux_score < $qmm_min_score)
 		{
@@ -364,7 +365,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 	{
 		$qmp_colums = count($qr_matrix[0]);
 	}
-
+	var_dump(ascii_print($qr_matrix));
 	// Rule #1
 	// 1. For the first evaluation condition, check each row one-by-one. If there are five consecutive modules of the same color, add 3 to the penalty.
 	// If there are more modules of the same color after the first five, add 1 for each additional module of the same color. 
@@ -454,7 +455,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 			}
 		}//end for j
 	}//end for i
-	//echo "Score #1: $qmp_aux_score<br>";
+	echo "Score #1: $qmp_aux_score<br>";
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 	// Rule #2
@@ -489,7 +490,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 			}
 		}//end for j
 	}//end for i
-	//echo "Score #2: $qmp_aux_score<br>";//DEBUG
+	echo "Score #2: $qmp_aux_score<br>";//DEBUG
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 
@@ -536,7 +537,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_column);
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_2, $qmp_string_column);
 	}
-	//echo "Score #3: $qmp_aux_score<br>";//DEBUG
+	echo "Score #3: $qmp_aux_score<br>";//DEBUG
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 
@@ -564,7 +565,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 	//echo "$qmp_percentage_prev5 | $qmp_percentage_next5<br>";
 	$qmp_aux_score = ($qmp_percentage_next5 < $qmp_percentage_prev5) ? $qmp_percentage_next5 * 10 : $qmp_percentage_prev5 * 10;
 	$qmp_score += $qmp_aux_score;
-	//echo "Score #4: $qmp_aux_score<br>";//DEBUG
+	echo "Score #4: $qmp_aux_score<br>";//DEBUG
 	//echo "----------------<br><b>TOTAL $qmp_score</b><br>";
 	return $qmp_score;
 }
@@ -621,7 +622,8 @@ function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 					}
 					break;
 				case 4:
-					if((($row / 2) + ($column / 3)) % 2 == 0)
+					//if((($row / 2) + ($column / 3)) % 2 == 0)
+					if(((intdiv_1($row, 2)) + (intdiv_1($column, 3))) % 2 == 0)
 					{
 						$qma_flip = true;
 					}
@@ -745,20 +747,20 @@ function qr_format_apply(& $qr_matrix, $qr_error_correction_level, $qr_data_mask
 			"y" => array(0 => 8, 8, 8, 8, 8, 8, 8, 8, $qfa_matrix_size - 7, $qfa_matrix_size - 6, $qfa_matrix_size - 5, $qfa_matrix_size - 4, $qfa_matrix_size - 3, $qfa_matrix_size - 2, $qfa_matrix_size - 1)
 			)
 		);
-	$dbg_log = fopen("log.txt", "w");//DEBUG
+	//$dbg_log = fopen("log.txt", "w");//DEBUG
 
 	for($i = 0; $i < 15; $i++)
 	{
 		$qfa_x = $qfa_coords[1]['x'][$i];
 		$qfa_y = $qfa_coords[1]['y'][$i];
-		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[$i] == "1") ? QRM_BLACK : QRM_WHITE);
+		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[14 - $i] == "1") ? QRM_BLACK : QRM_WHITE);
 
-		fwrite($dbg_log, "1. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} | ");
+		//fwrite($dbg_log, "1. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} | ");
 		$qfa_x = $qfa_coords[2]['x'][$i];
 		$qfa_y = $qfa_coords[2]['y'][$i];
-		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[$i] == "1") ? QRM_BLACK : QRM_WHITE);
+		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[14 - $i] == "1") ? QRM_BLACK : QRM_WHITE);
 
-		fwrite($dbg_log, "2. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} \n");
+		//fwrite($dbg_log, "2. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} \n");
 	}
 }
 ?>

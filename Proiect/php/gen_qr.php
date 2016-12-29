@@ -4,30 +4,6 @@
 <?php
 //Generator QR
 
-/* Comenteaza linia asta pentru a vedea una din masti [0-7]
-$dbg_mask_nr = 0;
-$dbg_matrix = qr_matrix_gen_empty(4);
-$dbg_data_white = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-$dbg_data_dark = "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-
-while(strlen($dbg_data_white) < 807)
-{
-	$dbg_data_white = $dbg_data_white . "0";
-}
-
-while(strlen($dbg_data_dark) < 807)
-{
-	$dbg_data_dark = $dbg_data_dark . "1";
-}
-
-qr_matrix_place_data($dbg_matrix, $dbg_data_white);
-var_dump(ascii_print($dbg_matrix));
-var_dump(ascii_print(qr_matrix_apply_mask($dbg_matrix, $dbg_mask_nr)));
-//*///!DEBUG
-
-
-
-
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
 	if(isset($_GET["text"]))
@@ -48,9 +24,11 @@ function generate_qr($text)
 		//URL-ul va fi de forma http://ADRESA_SITE/pagina?nr=XXXXXX
 		//Aceasta adresa are pana in 50 de caractere
 			//Vom alege Vesiunea 4 cu Error Corection Quality
+	
 	$qr_version = 4;
 	$qr_mode = "alphanumeric";
-	$qr_error_correction_level = "H";
+	$qr_error_correction_level = "H";// Production
+	
 	$qr_caracter_capacity_table = array(1 => array('L' => array('numeric' => 41, 'alphanumeric' => 25, 'byte' => 17),
 												   'M' => array('numeric' => 34, 'alphanumeric' => 20, 'byte' => 14),
 												   'Q' => array('numeric' => 27, 'alphanumeric' => 16, 'byte' => 11),
@@ -84,7 +62,9 @@ function generate_qr($text)
 	
 	$text = strtoupper($text);
 	$encoded_data = alfa_encode($text);
+	//TODO De parametrizat $bits_required!
 	$bits_required = 8 * 36;//36 - nr maxim de cuvinte de cod pentru Cod 4-H
+	//$bits_required = 8 * 9; // 9 - nr maxim de cuvinte de cod pentru 1-H
 
 	$encoded_data = $qr_mode_indicator . $data_len . $encoded_data;
 	$terminator = "";
@@ -109,7 +89,7 @@ function generate_qr($text)
 		}
 	}
 	
-	//var_dump($encoded_data);
+	var_dump($encoded_data);
 	
 	//3 - Calculare cod detectie de erori CRC
 		//4-H desparte codul in o grupa cu 4 blocuri a cate 9 cuvinte de cod fiecare
@@ -138,9 +118,11 @@ function generate_qr($text)
 	var_dump(ascii_print($qr_matrix));
 	$qr_matrix = qr_matrix_add_quiet_zone($qr_matrix);
 	var_dump(ascii_print2($qr_matrix));
-	qr_write_image($qr_matrix, "img.png");
-	$dbg_size = count($qr_matrix) * 4;
-	echo "<br><img src=img.png><br>";
+	//$dbg_size = count($qr_matrix) * 4;
+	$img_module_size = 12;
+	$img_size = count($qr_matrix) * $img_module_size;
+	qr_write_image($qr_matrix, "img.png", $img_module_size);
+	echo '<br><img src="img.png" height="{$img_size}" width="{$img_size}"><br>';
 	//function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 4)
 }
 
@@ -193,13 +175,11 @@ function ascii_print($matrix)
 			/*
 			if(($matrix[$i][$j] & QRM_RESERVED) != 0)
 				if ($matrix[$i][$j] % 2 == 1) {
-					//$output .= "%";
-					$output .= "";
+					$output .= "%";
 				}
 				else 
 				{
-					//$output .= "`";
-					$output .= " ";
+					$output .= "`";
 				}
 			else
 			{
@@ -225,7 +205,7 @@ function ascii_print($matrix)
 
 function ascii_print2($qr_matrix)
 {
-	$output = "";
+	$output = "<br>";
 	$ap_code = array(0 => " ", 1 => "▄", 2 => "▀", 3 => "█");
 	$qr_matrix_size = count($qr_matrix);
 	for($i = 0 ; $i < $qr_matrix_size - 1; $i = $i + 2)
@@ -257,14 +237,13 @@ function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 8)
 	{
 		for($j = 0; $j < $qr_matrix_size; $j++)
 		{
-			//$qwi_color = ($qr_matrix % 2 == 0) ? $qwi_white : $qwi_black;
-			$qwi_color = ($qr_matrix[$i][$j] % 2 == 0) ? $qwi_white : $qwi_black;
+			$qwi_color = (($qr_matrix[$i][$j] % 2) == 0) ? $qwi_white : $qwi_black;
 			imagefilledrectangle($qwi_img, $j * $img_module_size, $i * $img_module_size, $j * $img_module_size + $img_module_size, $i * $img_module_size + $img_module_size, $qwi_color);
 		}
 	}
 	$img_file = fopen($img_name, "w");
 	imagepng($qwi_img, $img_file);
-	//fclose($img_file);
+	//TODO Dealocare resurse!!
 }
 
 ?>

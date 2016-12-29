@@ -86,11 +86,17 @@ function qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_
 	// g1b - blocks in grup 1 | wpg1b - words per block in g1
 	// g2b - blocks in grup 2 | wpg2b - words per block in g2
 	// pp ca folosim EC_level H si versiunea 3 sau 4
+	
+	//TODO Copiat tabel
+	//http://www.thonky.com/qr-code-tutorial/error-correction-table
 	$qr_spec_codewords = array (
+		1 => array (
+			'L' => array ("cwpb" =>  7, "g1b" => 1, "wpg1b" => 19, "g2b" => 0, "wpg2b" => 0),
+			'H' => array ("cwpb" => 17, "g1b" => 1, "wpg1b" =>  9, "g2b" => 0, 'wpg2b' => 0)),
 		3 => array (
 			'H' => array ("cwpb" => 26, 'g1b' => 2, 'wpg1b' => 13, 'g2b' => 0, 'wpg2b' => 0)),
 		4 => array (
-			'H' => array ("cwpb" => 16, 'g1b' => 4, 'wpg1b' => 9, 'g2b' => 0, 'wpg2b' => 0))
+			'H' => array ("cwpb" => 16, 'g1b' => 4, 'wpg1b' =>  9, 'g2b' => 0, 'wpg2b' => 0))
 		);
 	$qr_data = array (1 => array(), 2 => array());//Data este structurata in 2 grupuri: 1 si 2
 	$octeti_per_grup1  = $qr_spec_codewords[$qr_version][$qr_error_correction_level]['wpg1b'];
@@ -283,25 +289,20 @@ function divide_poly_step($m, $g)
 		//BUG GRESIT! InMultim $g cu TERMENUL dominant al lui $m
 	$dps_grad_m = count($m) - 1;
 	$dps_grad_g = count($g) - 1;
-	//BUG trebuie sa inmultim cu a^m*x^n nu doar cu a^m!!!
+	//Trebuie sa inmultim cu a^m*x^n
 	//ATENTIE LA GRADUL LUI $g. Acesta trebuie sa scada!
 	$dps_lead_term = poly_gen_x_pow_n($dps_grad_m - $dps_grad_g);
 	$g = multiply_polynoms($g, $dps_lead_term);
 	$g = multiply_polynoms($g, array(0 => $m[$dps_grad_m]));
-	//echo "<br>M: ";	print_polin($m, false);	echo "<br>G: ";	print_polin($g, false); //DEBUG
 	// Facem XOR intre coeficientii lui $m si $g si punem rezultatul in $r
 	for($i = 0; $i < $dps_grad_m; $i++)
 	{
 		$dps_r[$i] = $g[$i] ^ $m[$i];
 	}
 	unset($dps_r[$dps_grad_m]);//stergem primul coeficient deoarece este 0
-	//echo "<br>R: ";	print_polin($dps_r, false); // DEBUG
 	return $dps_r;
 }
 
-
-
-//$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
 
 //Functia genereaza polinomul mesajului
 function gen_poly_msg($gpm_poly_string)
@@ -330,6 +331,9 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 {
 	$qr_ec_blocks = array();
 	$qr_ec_codewords = array (
+		1 => array (
+			'L' => 7,
+			'H' => 17),
 		3 => array (
 			'H' => 22),
 		4 => array (
@@ -462,6 +466,11 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	$qid_data = array();
 	$qid_data[1] = qr_interleave_across($qr_code_blocks);
 	$qid_data[2] = qr_interleave_across($qr_ec_blocks);
+	
+	echo "Code blocks:<br>";
+	var_dump($qid_data[1]);
+	echo "EC blocks:<br>";
+	var_dump($qid_data[2]);
 	$qid_res_string = "";
 	
 	$qid_n = count($qid_data[1]);
@@ -477,7 +486,7 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	
 	$qid_n = count($qid_data[2]);
 
-	for($j = 0; $j < $qid_n; $j++)
+	for($j = $qid_n - 1; $j >= 0; $j--)
 	{
 		$qid_aux = decbin($qid_data[2][$j]);
 		$qid_len = strlen($qid_aux);
@@ -500,7 +509,8 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	{
 		$qid_res_string = $qid_res_string . "0";
 	}
-
+	//echo "QR data: <br>";
+	//var_dump($qid_res_string);
 	return $qid_res_string;
 }
 ?>
