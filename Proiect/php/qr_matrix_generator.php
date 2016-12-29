@@ -327,9 +327,22 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 function qr_matrix_mask_data(&$qr_matrix)
 {
 	$qr_data_mask = 0;
+	/*/ DEBUG
+	 echo "Mask: $qr_data_mask<br>";
+	 $dbg_matrix = qr_matrix_apply_mask($qr_matrix, 0);
+	 var_dump(ascii_print($dbg_matrix));
+	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
+	//*///!DEBUG
+
 	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)
 	{
+		/*/DEBUG
+		 echo "<br>---------------------<br>Mask: $qmm_mask_number<br>";
+		 $dbg_matrix = qr_matrix_apply_mask($qr_matrix, $qmm_mask_number);
+		 var_dump(ascii_print($dbg_matrix));
+		 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
+		//*///!DEBUG
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
 		if($qmm_aux_score < $qmm_min_score)
 		{
@@ -339,6 +352,221 @@ function qr_matrix_mask_data(&$qr_matrix)
 	}
 	$qr_matrix = qr_matrix_apply_mask($qr_matrix, $qr_data_mask);
 	return $qr_data_mask;
+}
+
+
+function qr_matrix_penalty_score(& $qr_matrix)
+{
+	$qmp_score = 0;
+	$qmp_row = count($qr_matrix);
+	$qmp_colums = 0;
+	if(isset($qr_matrix[0]))
+	{
+		$qmp_colums = count($qr_matrix[0]);
+	}
+
+	// Rule #1
+	// 1. For the first evaluation condition, check each row one-by-one. If there are five consecutive modules of the same color, add 3 to the penalty.
+	// If there are more modules of the same color after the first five, add 1 for each additional module of the same color. 
+	// Afterward, check each column one-by-one, checking for the same condition. Add the horizontal and vertical total to obtain penalty score #1.
+	$qmp_aux_score = 0;
+	
+
+	for($i = 0; $i < $qmp_row; $i++)
+	{
+		$qmp_consec_white_r = 0;
+		$qmp_consec_black_r = 0;
+		$qmp_consec_white_c = 0;
+		$qmp_consec_black_c = 0;	
+		for($j = 0; $j < $qmp_colums; $j++)
+		{
+			// Per row
+			if(($qr_matrix[$i][$j] & QRM_BLACK) != 0)//Black module
+			{
+				$qmp_consec_black_r++;
+				$qmp_consec_white_r = 0;
+			}
+			else // White module
+			{
+				$qmp_consec_white_r++;
+				$qmp_consec_black_r = 0;
+			}
+
+			if($qmp_consec_white_r >= 5)
+			{
+				if($qmp_consec_white_r == 5)
+				{
+					$qmp_aux_score += 3;
+				}
+				else
+				{
+					$qmp_aux_score += 1;
+				}
+			}
+
+			if($qmp_consec_black_r >= 5)
+			{
+				if($qmp_consec_black_r == 5)
+				{
+					$qmp_aux_score += 3;
+				}
+				else
+				{
+					$qmp_aux_score += 1;
+				}
+			}
+
+			//Per column
+			if(($qr_matrix[$j][$i] & QRM_BLACK) != 0)//Black module
+			{
+				//NOTE i si j sunt schimbate!!!
+				$qmp_consec_black_c++;
+				$qmp_consec_white_c = 0;
+			}
+			else // White module
+			{
+				$qmp_consec_white_c++;
+				$qmp_consec_black_c = 0;
+			}
+
+			if($qmp_consec_white_c >= 5)
+			{
+				if($qmp_consec_white_c == 5)
+				{
+					$qmp_aux_score += 3;
+				}
+				else
+				{
+					$qmp_aux_score += 1;
+				}
+			}
+
+			if($qmp_consec_black_c >= 5)
+			{
+				if($qmp_consec_black_c == 5)
+				{
+					$qmp_aux_score += 3;
+				}
+				else
+				{
+					$qmp_aux_score += 1;
+				}
+			}
+		}//end for j
+	}//end for i
+	//echo "Score #1: $qmp_aux_score<br>";
+	$qmp_score += $qmp_aux_score;
+	$qmp_aux_score = 0;
+	// Rule #2
+	//For second evaluation condition, look for areas of the same color that are at least 2x2 modules or larger.
+	for($i = 0; $i < $qmp_row - 1; $i++)
+	{
+		for($j = 0; $j < $qmp_colums - 1; $j++)
+		{
+			// Daca tinem cont ca primul bit din valorile matricei reprezinta culoarea modulului
+			// Folosim operatia de SI logic pentru a afla daca toate valorile sunt 1 (negru)
+			// si operatia de SAU logic pentru a afla daca oate valorile sunt 0 (alb)
+			$qmp_block_sum = 1;
+			$qmp_block_sum = ($qr_matrix[$i + 1][$j + 1] & QRM_BLACK) & $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i + 1][$j    ] & QRM_BLACK) & $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i    ][$j + 1] & QRM_BLACK) & $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i    ][$j    ] & QRM_BLACK) & $qmp_block_sum;
+			if($qmp_block_sum == 1)
+			{
+				//toate blocurile sunt negre
+				$qmp_aux_score += 3;
+			}
+
+			$qmp_block_sum = 0;
+			$qmp_block_sum = ($qr_matrix[$i + 1][$j + 1] & QRM_BLACK) | $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i + 1][$j    ] & QRM_BLACK) | $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i    ][$j + 1] & QRM_BLACK) | $qmp_block_sum;
+			$qmp_block_sum = ($qr_matrix[$i    ][$j    ] & QRM_BLACK) | $qmp_block_sum;
+			if($qmp_block_sum == 0)
+			{
+				//toate blocurile sunt albe
+				$qmp_aux_score += 3;
+			}
+		}//end for j
+	}//end for i
+	//echo "Score #2: $qmp_aux_score<br>";//DEBUG
+	$qmp_score += $qmp_aux_score;
+	$qmp_aux_score = 0;
+
+	// Rule #3
+	// The third penalty rule looks for patterns of dark-light-dark-dark-dark-light-dark that have four light modules on either side
+	// # . # # # . # . . . .
+	// . . . . # . # # # . #
+	// We use the magic of regex
+	$qmp_pattern_1 = "/(10111010000)/";
+	$qmp_pattern_2 = "/(00001011101)/";
+	for($i = 0; $i < $qmp_row; $i++)
+	{
+		$qmp_string_row = "";
+		$qmp_string_column = "";
+		for($j = 0; $j < $qmp_colums; $j++)
+		{
+			$qmp_string_row .= ($qr_matrix[$i][$j] & QRM_BLACK) ? "1" : "0";
+			$qmp_string_column .= ($qr_matrix[$j][$i] & QRM_BLACK) ? "1" : "0";
+		}
+		/*DEBUG
+		$dbg_pma_c = preg_match_all($qmp_pattern_1, $qmp_string_row);
+		if($dbg_pma_c != 0)
+		{
+			echo "Found $dbg_pma_c matches in row $i<br>";
+		}
+		$dbg_pma_c = preg_match_all($qmp_pattern_2, $qmp_string_row);
+		if($dbg_pma_c != 0)
+		{
+			echo "Found $dbg_pma_c matches 2 in row $i<br>";
+		}
+		$dbg_pma_c = preg_match_all($qmp_pattern_1, $qmp_string_column);
+		if($dbg_pma_c != 0)
+		{
+			echo "Found $dbg_pma_c matches in col $i<br>";
+		}
+		$dbg_pma_c = preg_match_all($qmp_pattern_2, $qmp_string_column);
+		if($dbg_pma_c != 0)
+		{
+			echo "Found $dbg_pma_c matches 2 in col $i<br>";
+		}
+		//*///!DEBUG
+		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_row);
+		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_2, $qmp_string_row);
+		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_column);
+		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_2, $qmp_string_column);
+	}
+	//echo "Score #3: $qmp_aux_score<br>";//DEBUG
+	$qmp_score += $qmp_aux_score;
+	$qmp_aux_score = 0;
+
+	// Rule #4
+	// The final evaluation condition is based on the ratio of light modules to dark modules
+	$qmp_count_dark = 0;
+	for($i = 0; $i < $qmp_row; $i++)
+	{
+		for($j = 0; $j < $qmp_colums; $j++)
+		{
+			$qmp_count_dark += ($qr_matrix[$i][$j] & QRM_BLACK) ? 1 : 0;
+		}
+	}
+	$qmp_count_total = $qmp_row * $qmp_colums; // sau $qmp_row * $qmp_colums
+	//echo "Dark $qmp_count_dark | TOTAL = $qmp_count_total<br>";
+	$qmp_percentage = ($qmp_count_dark / $qmp_count_total) * 100.0;
+	$qmp_percentage = (int) $qmp_percentage;
+	$qmp_percentage_prev5 = intdiv_1($qmp_percentage, 5) * 5;
+	$qmp_percentage_next5 = $qmp_percentage_prev5 + 5;
+	//echo "$qmp_percentage | $qmp_percentage_prev5 | $qmp_percentage_next5<br>";
+	$qmp_percentage_prev5 = (int)abs($qmp_percentage_prev5 - 50);
+	$qmp_percentage_prev5 = intdiv_1($qmp_percentage_prev5, 5);
+	$qmp_percentage_next5 = (int)abs($qmp_percentage_next5 - 50);
+	$qmp_percentage_next5 = intdiv_1($qmp_percentage_next5, 5);
+	//echo "$qmp_percentage_prev5 | $qmp_percentage_next5<br>";
+	$qmp_aux_score = ($qmp_percentage_next5 < $qmp_percentage_prev5) ? $qmp_percentage_next5 * 10 : $qmp_percentage_prev5 * 10;
+	$qmp_score += $qmp_aux_score;
+	//echo "Score #4: $qmp_aux_score<br>";//DEBUG
+	//echo "----------------<br><b>TOTAL $qmp_score</b><br>";
+	return $qmp_score;
 }
 
 function qr_matrix_flip_bit($bit)
