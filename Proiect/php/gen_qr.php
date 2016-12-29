@@ -23,7 +23,8 @@ while(strlen($dbg_data_dark) < 807)
 qr_matrix_place_data($dbg_matrix, $dbg_data_white);
 var_dump(ascii_print($dbg_matrix));
 var_dump(ascii_print(qr_matrix_apply_mask($dbg_matrix, $dbg_mask_nr)));
-//*/
+//*///!DEBUG
+
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
