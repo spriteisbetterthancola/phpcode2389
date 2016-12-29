@@ -659,4 +659,106 @@ function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 	return $qr_matrix;
 }
 
+
+//qr_matrix_add_quiet_zone($qr_matrix);
+function qr_matrix_add_quiet_zone($qr_matrix)
+{
+	//Please note that the QR code specification requires that the QR matrix be surrounded by a quiet zone: a 4-module-wide area of light modules.
+	$qr_matrix_size = count($qr_matrix);
+	$qr_matrix_2 = array_fill(0, $qr_matrix_size + 8, array());
+	for($i = 0; $i < 4; $i++)
+	{
+		for($j = 0; $j < $qr_matrix_size + 8; $j++)
+		{
+			$qr_matrix_2[$i][$j] = QRM_WHITE;
+			$qr_matrix_2[$qr_matrix_size + 4 + $i][$j] = QRM_WHITE;
+		}
+	}
+
+	for($i = 0; $i < 4; $i++)
+	{
+		for($j = 0; $j < $qr_matrix_size; $j++)
+		{
+			$qr_matrix_2[$j + 4][$i] = QRM_WHITE;
+			$qr_matrix_2[$j + 4][$qr_matrix_size + 4 + $i] = QRM_WHITE;
+		}
+	}
+
+	for($i = 0; $i < $qr_matrix_size; $i++)
+	{
+		for($j = 0; $j < $qr_matrix_size; $j++)
+		{
+			$qr_matrix_2[$j + 4][$i + 4] = $qr_matrix[$j][$i];
+		}
+	}
+	return $qr_matrix_2;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
+ * * * * * * * * * * * *  FORMAT STRING FUNCTION   * * * * * * * * * * *
+ * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+//Source:
+//http://www.thonky.com/qr-code-tutorial/format-version-tables
+function qr_format_string($qr_error_correction_level, $qr_mask_pattern)
+{
+	$qfs_database = array(
+		"L" => array( 
+			0 => "111011111000100", 1 => "111001011110011",
+			2 => "111110110101010", 3 => "111100010011101",
+			4 => "110011000101111", 5 => "110001100011000",
+			6 => "110110001000001", 7 => "110100101110110"),
+		"M" => array(
+			0 => "101010000010010", 1 => "101000100100101",
+			2 => "101111001111100", 3 => "101101101001011",
+			4 => "100010111111001", 5 => "100000011001110",
+			6 => "100111110010111", 7 => "100101010100000"),
+		"Q" => array(
+			0 => "011010101011111", 1 => "011000001101000",
+			2 => "011111100110001", 3 => "011101000000110",
+			4 => "010010010110100", 5 => "010000110000011",
+			6 => "010111011011010", 7 => "010101111101101"),
+		"H" => array(
+			0 => "001011010001001", 1 => "001001110111110",
+			2 => "001110011100111", 3 => "001100111010000",
+			4 => "000011101100010", 5 => "000001001010101",
+			6 => "000110100001100", 7 => "000100000111011")
+		);
+	return $qfs_database[$qr_error_correction_level][$qr_mask_pattern];
+}
+
+function qr_format_apply(& $qr_matrix, $qr_error_correction_level, $qr_data_mask)
+{
+	$qfa_matrix_size = count($qr_matrix);
+
+	$qfa_format_string = qr_format_string($qr_error_correction_level, $qr_data_mask);
+	//Plasare in matrice
+	$qfa_coords = array(
+		1 => array (
+			"x" => array(0 => 8, 8, 8, 8, 8, 8, 8, 8, 7, 5, 4, 3, 2, 1, 0),
+			"y" => array(0 => 0, 1, 2, 3, 4, 5, 7, 8, 8, 8, 8, 8, 8, 8, 8)
+			),
+		2 => array (
+			"x" => array(0 => $qfa_matrix_size - 1, $qfa_matrix_size - 2, $qfa_matrix_size - 3, $qfa_matrix_size - 4, $qfa_matrix_size - 5, $qfa_matrix_size - 6, $qfa_matrix_size - 7, $qfa_matrix_size - 8, 8, 8, 8, 8, 8, 8, 8),
+			"y" => array(0 => 8, 8, 8, 8, 8, 8, 8, 8, $qfa_matrix_size - 7, $qfa_matrix_size - 6, $qfa_matrix_size - 5, $qfa_matrix_size - 4, $qfa_matrix_size - 3, $qfa_matrix_size - 2, $qfa_matrix_size - 1)
+			)
+		);
+	$dbg_log = fopen("log.txt", "w");//DEBUG
+
+	for($i = 0; $i < 15; $i++)
+	{
+		$qfa_x = $qfa_coords[1]['x'][$i];
+		$qfa_y = $qfa_coords[1]['y'][$i];
+		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[$i] == "1") ? QRM_BLACK : QRM_WHITE);
+
+		fwrite($dbg_log, "1. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} | ");
+		$qfa_x = $qfa_coords[2]['x'][$i];
+		$qfa_y = $qfa_coords[2]['y'][$i];
+		$qr_matrix[$qfa_y][$qfa_x] = $qr_matrix[$qfa_y][$qfa_x] | (($qfa_format_string[$i] == "1") ? QRM_BLACK : QRM_WHITE);
+
+		fwrite($dbg_log, "2. {$qfa_x} {$qfa_y} = $qfa_format_string[$i] <- bn {$i} \n");
+	}
+}
 ?>

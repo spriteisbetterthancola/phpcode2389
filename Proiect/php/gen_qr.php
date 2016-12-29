@@ -1,4 +1,4 @@
-<pre>
+<pre><!-- <= FOR DEBUG -->
 <?php require_once "qr_error_correction.php"; ?>
 <?php require_once "qr_matrix_generator.php"; ?>
 <?php
@@ -24,6 +24,8 @@ qr_matrix_place_data($dbg_matrix, $dbg_data_white);
 var_dump(ascii_print($dbg_matrix));
 var_dump(ascii_print(qr_matrix_apply_mask($dbg_matrix, $dbg_mask_nr)));
 //*///!DEBUG
+
+
 
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
@@ -129,7 +131,17 @@ function generate_qr($text)
 	$qr_matrix = qr_matrix_gen_empty($qr_version);
 	qr_matrix_place_data($qr_matrix, $qr_data);
 	$qr_data_mask = qr_matrix_mask_data($qr_matrix);
+
+	// 6 - Adaugare informatii format
+	//function qr_format_apply(& $qr_matrix, $qr_error_correction_level, $qr_data_mask)
+	qr_format_apply($qr_matrix, $qr_error_correction_level, $qr_data_mask);
 	var_dump(ascii_print($qr_matrix));
+	$qr_matrix = qr_matrix_add_quiet_zone($qr_matrix);
+	var_dump(ascii_print2($qr_matrix));
+	qr_write_image($qr_matrix, "img.png");
+	$dbg_size = count($qr_matrix) * 4;
+	echo "<br><img src=img.png><br>";
+	//function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 4)
 }
 
 function intdiv_1($a, $b){
@@ -178,14 +190,16 @@ function ascii_print($matrix)
 	$output = "<pre>";
 	for ($i=0, $lines = count($matrix); $i<$lines; $i++)	{
 		for ($j=0, $colums = count($matrix[$i]); $j<$colums; $j++) {
-			///*
+			/*
 			if(($matrix[$i][$j] & QRM_RESERVED) != 0)
 				if ($matrix[$i][$j] % 2 == 1) {
-					$output .= "%";
+					//$output .= "%";
+					$output .= "";
 				}
 				else 
 				{
-					$output .= "`";
+					//$output .= "`";
+					$output .= " ";
 				}
 			else
 			{
@@ -201,7 +215,7 @@ function ascii_print($matrix)
 				$output .= " ";
 			}
 			//*/
-			//$output .= $matrix[$i][$j] . " ";
+			$output .= ($matrix[$i][$j] % 2) . " ";
 		}
 		$output .= "\n";
 	}
@@ -209,6 +223,49 @@ function ascii_print($matrix)
 	return $output;
 }
 
+function ascii_print2($qr_matrix)
+{
+	$output = "";
+	$ap_code = array(0 => " ", 1 => "▄", 2 => "▀", 3 => "█");
+	$qr_matrix_size = count($qr_matrix);
+	for($i = 0 ; $i < $qr_matrix_size - 1; $i = $i + 2)
+	{
+		for($j = 0; $j < $qr_matrix_size; $j++)
+		{
+			$ap_val = 2 * ($qr_matrix[$i][$j] % 2) + ($qr_matrix[$i + 1][$j] % 2);
+			$output = $output . $ap_code[$ap_val];
+		}
+		$output = $output . "<br>";
+	}
+
+	for($j = 0; $j < $qr_matrix_size; $j++)
+	{
+		$ap_val = 2 * ($qr_matrix[$qr_matrix_size - 1][$j] % 2);
+		$output = $output . $ap_code[$ap_val];
+	}
+	return $output;
+}
+
+function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 8)
+{
+	$qr_matrix_size = count($qr_matrix);
+	echo "Img size: $qr_matrix_size * $img_module_size<br>";
+	$qwi_img = imagecreatetruecolor($qr_matrix_size * $img_module_size, $qr_matrix_size * $img_module_size);
+	$qwi_white = imagecolorallocate( $qwi_img, 255, 255, 255 );//White #FFF
+	$qwi_black = imagecolorallocate( $qwi_img, 000, 000, 000 );//Black #000
+	for($i = 0; $i < $qr_matrix_size; $i++)
+	{
+		for($j = 0; $j < $qr_matrix_size; $j++)
+		{
+			//$qwi_color = ($qr_matrix % 2 == 0) ? $qwi_white : $qwi_black;
+			$qwi_color = ($qr_matrix[$i][$j] % 2 == 0) ? $qwi_white : $qwi_black;
+			imagefilledrectangle($qwi_img, $j * $img_module_size, $i * $img_module_size, $j * $img_module_size + $img_module_size, $i * $img_module_size + $img_module_size, $qwi_color);
+		}
+	}
+	$img_file = fopen($img_name, "w");
+	imagepng($qwi_img, $img_file);
+	//fclose($img_file);
+}
 
 ?>
 
