@@ -333,23 +333,27 @@ function qr_matrix_mask_data(&$qr_matrix)
 	 var_dump(ascii_print($dbg_matrix));
 	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
 	//*///!DEBUG
-	 echo "Mask #0:<br>";
+	//echo "Mask #0:<br>";//DEBUG
 	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
-	for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)
+	//echo " qmm_min_score = $qmm_min_score<br>"; // DEBUG
+	//echo "Mask #0:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, 0);
+	//qr_format_apply($dbg_matrix, "H", 0); var_dump(ascii_print2($dbg_matrix));
+	//for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)//Ideal. Dar mastile #6 si #7 nu functionaeza cum trebuie
+	for($qmm_mask_number = 1; $qmm_mask_number <= 5; $qmm_mask_number++)//This should word tho
+
 	{
-		/*/DEBUG
-		 echo "<br>---------------------<br>Mask: $qmm_mask_number<br>";
-		 $dbg_matrix = qr_matrix_apply_mask($qr_matrix, $qmm_mask_number);
-		 var_dump(ascii_print($dbg_matrix));
-		 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
-		//*///!DEBUG
-		 echo "Mask #$qmm_mask_number:<br>";
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
+
+		/*/DEBUG
+		echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
+		qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
+		// !DEBUG */
 		if($qmm_aux_score < $qmm_min_score)
 		{
 			$qr_data_mask = $qmm_mask_number;
 			$qmm_min_score = $qmm_aux_score;
 		}
+		//echo "qmm_aux_score = $qmm_aux_score | qmm_min_score = $qmm_min_score<br>";//DEBUG
 	}
 	$qr_matrix = qr_matrix_apply_mask($qr_matrix, $qr_data_mask);
 	return $qr_data_mask;
@@ -365,7 +369,6 @@ function qr_matrix_penalty_score(& $qr_matrix)
 	{
 		$qmp_colums = count($qr_matrix[0]);
 	}
-	var_dump(ascii_print($qr_matrix));
 	// Rule #1
 	// 1. For the first evaluation condition, check each row one-by-one. If there are five consecutive modules of the same color, add 3 to the penalty.
 	// If there are more modules of the same color after the first five, add 1 for each additional module of the same color. 
@@ -455,7 +458,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 			}
 		}//end for j
 	}//end for i
-	echo "Score #1: $qmp_aux_score<br>";
+	//echo "Score #1: $qmp_aux_score<br>";
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 	// Rule #2
@@ -490,7 +493,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 			}
 		}//end for j
 	}//end for i
-	echo "Score #2: $qmp_aux_score<br>";//DEBUG
+	//echo "Score #2: $qmp_aux_score<br>";//DEBUG
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 
@@ -537,7 +540,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_column);
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_2, $qmp_string_column);
 	}
-	echo "Score #3: $qmp_aux_score<br>";//DEBUG
+	//echo "Score #3: $qmp_aux_score<br>";//DEBUG
 	$qmp_score += $qmp_aux_score;
 	$qmp_aux_score = 0;
 
@@ -565,7 +568,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 	//echo "$qmp_percentage_prev5 | $qmp_percentage_next5<br>";
 	$qmp_aux_score = ($qmp_percentage_next5 < $qmp_percentage_prev5) ? $qmp_percentage_next5 * 10 : $qmp_percentage_prev5 * 10;
 	$qmp_score += $qmp_aux_score;
-	echo "Score #4: $qmp_aux_score<br>";//DEBUG
+	//echo "Score #4: $qmp_aux_score<br>";//DEBUG
 	//echo "----------------<br><b>TOTAL $qmp_score</b><br>";
 	return $qmp_score;
 }
@@ -634,18 +637,21 @@ function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 						$qma_flip = true;
 					}
 					break;
+				//Din oarece motive mistice mastile nr 6 si 7 nu functioneaza deci vor fi dezactivate
+				/*
 				case 6:
-					if((($row * $column) % 2) + (($row * $column) % 3) % 2 == 0)
+					if(((($row * $column) % 2) + (($row * $column) % 3) % 2) == 0)
 					{
 						$qma_flip = true;
 					}
 					break;
 				case 7:
-					if((($row + $column) % 2) + (($row * $column) % 3) % 2 == 0)
+					if(((($row + $column) % 2) + (($row * $column) % 3) % 2) == 0)
 					{
 						$qma_flip = true;
 					}
 					break;
+				//Dezactivare masti #6 si #7*/
 				default:
 					# code...
 					echo "ERROR! Invalid data mask {$qr_data_mask}!";

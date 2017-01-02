@@ -96,6 +96,7 @@ function qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_
 		3 => array (
 			'H' => array ("cwpb" => 26, 'g1b' => 2, 'wpg1b' => 13, 'g2b' => 0, 'wpg2b' => 0)),
 		4 => array (
+			'Q' => array ("cwpb" => 26, 'g1b' => 2, 'wpg1b' => 24, 'g2b' => 0, 'wpg2b' => 0),
 			'H' => array ("cwpb" => 16, 'g1b' => 4, 'wpg1b' =>  9, 'g2b' => 0, 'wpg2b' => 0))
 		);
 	$qr_data = array (1 => array(), 2 => array());//Data este structurata in 2 grupuri: 1 si 2
@@ -330,6 +331,8 @@ function poly_gen_x_pow_n($n)
 function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level)
 {
 	$qr_ec_blocks = array();
+	//TODO De copiat din tabel
+
 	$qr_ec_codewords = array (
 		1 => array (
 			'L' => 7,
@@ -337,6 +340,7 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 		3 => array (
 			'H' => 22),
 		4 => array (
+			'Q' => 26,
 			'H' => 16)
 		);
 	$ec_per_block = $qr_ec_codewords[$qr_version][$qr_error_correction_level];
@@ -390,6 +394,15 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 			// Impartirii sa inceapa de pe pozitia 1
 			$qr_ec_blocks[$b][$i] = multiply_polynoms($poly_mesaj, poly_gen_x_pow_n(1));
 			unset($qr_ec_blocks[$b][$i][0]);
+			//Reverse array so that $qr_ec_blocs[1] will be the lead term of the polynomial
+			//echo "qr_ec_blocks[b][$i]:<br>"; var_dump($qr_ec_blocks[$b][$i]);
+			for($k=1, $kn = count($qr_ec_blocks[$b][$i]); $k <= $kn / 2; $k++)
+			{
+				$aux = $qr_ec_blocks[$b][$i][$k];
+				$qr_ec_blocks[$b][$i][$k] = $qr_ec_blocks[$b][$i][$kn - $k + 1];
+				$qr_ec_blocks[$b][$i][$kn - $k + 1] = $aux;
+			}
+			//echo "qr_ec_blocks[b][$i]:<br>"; var_dump($qr_ec_blocks[$b][$i]);
 			//$qr_ec_blocks[$b][$i] = $poly_mesaj;
 		}
 	}
@@ -467,10 +480,19 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 	$qid_data[1] = qr_interleave_across($qr_code_blocks);
 	$qid_data[2] = qr_interleave_across($qr_ec_blocks);
 	
+	/*/DEBUG!!!
 	echo "Code blocks:<br>";
-	var_dump($qid_data[1]);
-	echo "EC blocks:<br>";
-	var_dump($qid_data[2]);
+	for($i=0; $i<36; $i++)
+	{
+		echo bindec($qid_data[1][$i]) . ", ";
+	}
+	echo "<br>EC blocks:";
+	for($i=0; $i<36; $i++)
+	{
+		echo $qid_data[2][$i] . ", ";
+	}
+	//!DEBUG */
+
 	$qid_res_string = "";
 	
 	$qid_n = count($qid_data[1]);
@@ -483,10 +505,11 @@ function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 
 	//avem 1 set de date de convertit
 	//qr_data[2]
-	
+	//echo "<br> qid_data[2]:<br>";
+	//var_dump($qid_data[2]);
 	$qid_n = count($qid_data[2]);
 
-	for($j = $qid_n - 1; $j >= 0; $j--)
+	for($j = 0; $j < $qid_n; $j++)
 	{
 		$qid_aux = decbin($qid_data[2][$j]);
 		$qid_len = strlen($qid_aux);
