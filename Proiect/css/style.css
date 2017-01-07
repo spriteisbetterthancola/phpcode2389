@@ -70,3 +70,7 @@ a {
 .logout { float:right; }
   
 .msgln { margin:0 0 2px 0; }
+
+#new_button{
+    float:left;
+}
