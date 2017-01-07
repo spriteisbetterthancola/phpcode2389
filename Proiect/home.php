@@ -5,7 +5,7 @@
 	<head>
 		<title> Home </title>
 		<meta charset="UTF-8">
-		<link  type ="text/css" rel ="stylesheet" href="css/style.css"/>
+		<link  type="text/css" rel ="stylesheet" href="css/style.css"/>
 	</head>
 	<body>
 		<section id = "S1">
