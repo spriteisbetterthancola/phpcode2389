@@ -145,7 +145,7 @@ function generate_qr($text)
 	$qr_matrix = qr_matrix_add_quiet_zone($qr_matrix);
 	//var_dump(ascii_print2($qr_matrix));
 	//$dbg_size = count($qr_matrix) * 4;
-	$img_module_size = 12;
+	$img_module_size = 48;
 	$img_size = count($qr_matrix) * $img_module_size;
 	qr_write_image($qr_matrix, "img.png", $img_module_size);
 	//echo '<br><img src="img.png" height="{$img_size}" width="{$img_size}"><br>';//Daca imaginea a fost salvata in fisier

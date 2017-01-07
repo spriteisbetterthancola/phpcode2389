@@ -390,10 +390,14 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
 			{
 				$poly_mesaj = divide_poly_step($poly_mesaj, $poly_gen);
 			}
+			//In $poly_mesaj este restul impartirii (cuvintele de EC pe care le dorim)
+
+
 			//DEVNOTE Deoarece Covintele de cod incep de pe pozitia 1, vom face si restul
 			// Impartirii sa inceapa de pe pozitia 1
 			$qr_ec_blocks[$b][$i] = multiply_polynoms($poly_mesaj, poly_gen_x_pow_n(1));
 			unset($qr_ec_blocks[$b][$i][0]);
+
 			//Reverse array so that $qr_ec_blocs[1] will be the lead term of the polynomial
 			//echo "qr_ec_blocks[b][$i]:<br>"; var_dump($qr_ec_blocks[$b][$i]);
 			for($k=1, $kn = count($qr_ec_blocks[$b][$i]); $k <= $kn / 2; $k++)
