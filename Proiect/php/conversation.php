@@ -15,7 +15,9 @@ if($_SERVER['REQUEST_METHOD'] == "GET")
 	}
 }
 */
+?>
 
+<?php
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	if(isset($_POST["conv_exist"]))
@@ -25,6 +27,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 		//var_dump($_POST);
 	}
 };
+
+
 /*!
  * @brief genereaza un ID nou pentru conversatie
  * ID-ul este aleator
