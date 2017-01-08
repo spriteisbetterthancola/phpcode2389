@@ -80,8 +80,9 @@ a {
 #join_section{
     float:right;
     display: table;
-    height: 60%;
+    height: 65%;
     width: 50% ; 
+
     background-color: green;
 }
 
@@ -102,12 +103,13 @@ a {
 #new_section{
     display: table;
     float:left;
-    height: 60%;
+    height: 65%;
     width: 50%;
     background-color: red;
+    margin: 0 auto;
 }
 #new_button
-{
+{   margin-left: 25%;
     color:#444;
     border:1px solid #CCC;
     background:#DDD;
@@ -115,7 +117,6 @@ a {
     cursor:pointer;
     max-width: 100px;
     padding: 15px;
-   /* display:table-cell; */
     vertical-align: middle;
     text-align: center; 
 }
