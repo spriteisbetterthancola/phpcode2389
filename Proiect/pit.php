@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 		die ("No User Name!<b>");
 	}
 }
-
+/*
 <<<<<<< HEAD
 $conv_uid = 0;
 $usr_name = 0;
@@ -67,3 +67,4 @@ $conv_uid = "";
 	
 	</body>
 </html>
+*/
