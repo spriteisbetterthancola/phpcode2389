@@ -48,7 +48,7 @@
 					  <form class="w3-panel" style="border: 0px solid !important;"  action="pagina.php" 
 					  onsubmit="return js_validate_new(this);" method="post">
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required" name ="numeConversatie" 
+									<input class="w3-input" type ="text" required="required" name ="conversationName" 
 									onchange="js_validate_new(this)" id ="conversationName">
 									<label class="w3-label w3-validate">Nume conversație</label>
 								</div>
@@ -60,7 +60,7 @@
 								</div>
 
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required"  name ="passwordInput" 
+									<input class="w3-input" type ="text" required="required"  name="pswd" 
 									onchange="js_validate_new(this)" id="passwordInput">
 									<label class="w3-label w3-validate">Parola</label>
 								</div>
