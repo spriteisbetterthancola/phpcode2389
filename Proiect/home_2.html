@@ -17,7 +17,7 @@
 				  <h3 class="w3-teal w3-padding-top">Join</h3>
 				    <section id="join-form-wrapper" class="w3-row-padding w3-center">
 					  <form class="w3-panel" style="border: 0px solid !important;"  action="pit.php" 
-					  onsubmit="return js_validate_join(this)" method="post">
+					  onsubmit="return js_validate_join(this);" method="post">
 								<div class="w3-group">
 									<input class="w3-input w3-deep-orange" type ="text" required="required" name="idConversatie" 
 									onchange="js_validate_join(this)" id="idConversatie">
@@ -45,19 +45,22 @@
 					<h3 class="w3-teal w3-padding-top">New Conversation</h3>
 					<section id="join-form-wrapper" class="w3-row-padding w3-center">
 					  <form class="w3-panel" style="border: 0px solid !important;"  action="pagina.php" 
-					  onsubmit="return js_validate(this)" method="post">
+					  onsubmit="return js_validate_new(this);" method="post">
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required" name ="numeConversatie" id ="numeConversatie">
+									<input class="w3-input" type ="text" required="required" name ="numeConversatie" 
+									onchange="js_validate_new(this)" id ="numeConversatie">
 									<label class="w3-label w3-validate">Nume conversație</label>
 								</div>
 
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required"  name ="adminName" id= "adminName">
+									<input class="w3-input" type="text" required="required"  name="adminName" 
+									onchange="js_validate_new(this)" id="adminName">
 									<label class="w3-label w3-validate">Nume Administrator</label>
 								</div>
 
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required"  name ="passwordInput" id= "passwordInput">
+									<input class="w3-input" type ="text" required="required"  name ="passwordInput" 
+									onchange="js_validate_new(this)" id="passwordInput">
 									<label class="w3-label w3-validate">Parola</label>
 								</div>
 
