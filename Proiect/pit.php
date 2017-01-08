@@ -2,6 +2,27 @@
 <?php 
 //Seteaza variabilele de sesiune
 session_start();
+if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
+{
+	$conv_uid = "";
+	$usr_name = "";
+	if(isset($_POST['idConversatie']))
+	{
+		$conv_uid = $_POST['idConversatie'];
+	}
+	else
+	{
+		die("<br>NULL CONV ID!<br>");
+	}
+	if(isset($_POST['nickName']))
+	{
+		$usr_name = $_POST['nickName'];
+	}
+	else {
+		die ("No User Name!<b>");
+	}
+	
+}
 ?>
 <html>
 	<head>
@@ -10,7 +31,7 @@ session_start();
 	<body>
 		<main> <section>
 			<header><section>
-				Lorem Ipsum Header		
+				HEADER		
 			</section></header>
 			<aside>
 				<section>
@@ -23,7 +44,7 @@ session_start();
 				</section>
 			</section>
 			<footer><section>
-				Dolor Sit Footer
+				Footer - f.subtire (ascuns pe mobil)
 			</section></footer>
 		</section></main>
 	</body>
