@@ -68,35 +68,52 @@ $(function() {
 <div class="title">qr_error_correction.php File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Contine functii pentru generare coduri de corectie erori.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:af4394d0b431474a8cdfcc656922b6257"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#af4394d0b431474a8cdfcc656922b6257">qr_split_encoded_data</a> ($encoded_data, $qr_version, $qr_error_correction_level)</td></tr>
+<tr class="memdesc:af4394d0b431474a8cdfcc656922b6257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imparte datele codificate in grupuri si blocuri.  <a href="#af4394d0b431474a8cdfcc656922b6257">More...</a><br /></td></tr>
 <tr class="separator:af4394d0b431474a8cdfcc656922b6257"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04c6c7564f2bd40f1019d35d0c1a31a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#a04c6c7564f2bd40f1019d35d0c1a31a4">qr_pow</a> ($a)</td></tr>
+<tr class="memdesc:a04c6c7564f2bd40f1019d35d0c1a31a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">intoarce 2 la puterea a in campuri Galois 256  <a href="#a04c6c7564f2bd40f1019d35d0c1a31a4">More...</a><br /></td></tr>
 <tr class="separator:a04c6c7564f2bd40f1019d35d0c1a31a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1f0876e5453cd712defb87a98b8d3db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#af1f0876e5453cd712defb87a98b8d3db">qr_log</a> ($a)</td></tr>
+<tr class="memdesc:af1f0876e5453cd712defb87a98b8d3db"><td class="mdescLeft">&#160;</td><td class="mdescRight">intoarce logaritm in baza a in campuri Galois 256  <a href="#af1f0876e5453cd712defb87a98b8d3db">More...</a><br /></td></tr>
 <tr class="separator:af1f0876e5453cd712defb87a98b8d3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add1310f4e9e33f691446bdd592a3becb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#add1310f4e9e33f691446bdd592a3becb">qr_alpha_pol</a> ($polin)</td></tr>
+<tr class="memdesc:add1310f4e9e33f691446bdd592a3becb"><td class="mdescLeft">&#160;</td><td class="mdescRight">face conversia unui polinom in notatie alfa  <a href="#add1310f4e9e33f691446bdd592a3becb">More...</a><br /></td></tr>
 <tr class="separator:add1310f4e9e33f691446bdd592a3becb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b5fc2f740eb7eddad79455f33fb63da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#a4b5fc2f740eb7eddad79455f33fb63da">print_polin</a> ($polin, $pp_al_mode=true)</td></tr>
+<tr class="memdesc:a4b5fc2f740eb7eddad79455f33fb63da"><td class="mdescLeft">&#160;</td><td class="mdescRight">afiseaza cu echo un polinom in notatie alfa  <a href="#a4b5fc2f740eb7eddad79455f33fb63da">More...</a><br /></td></tr>
 <tr class="separator:a4b5fc2f740eb7eddad79455f33fb63da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2feb5202c8fd958ee54a1ca360108fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#ae2feb5202c8fd958ee54a1ca360108fc">multiply_polynoms</a> ($p, $q)</td></tr>
+<tr class="memdesc:ae2feb5202c8fd958ee54a1ca360108fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">face inmultirea a doua polinoame in campuri Galois 256  <a href="#ae2feb5202c8fd958ee54a1ca360108fc">More...</a><br /></td></tr>
 <tr class="separator:ae2feb5202c8fd958ee54a1ca360108fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad598810c753d49944376a676e3ef1240"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#ad598810c753d49944376a676e3ef1240">divide_poly_step</a> ($m, $g)</td></tr>
+<tr class="memdesc:ad598810c753d49944376a676e3ef1240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executa un pad de diviziune intre Polinomul mesajului $m si polinomul generator $g Pentru generarea codurilor corectoare de erori aceasta functie se apeleaza de mai multe ori in $qr_gen_ec_blocks.  <a href="#ad598810c753d49944376a676e3ef1240">More...</a><br /></td></tr>
 <tr class="separator:ad598810c753d49944376a676e3ef1240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee2395780f9ae582350307a1c908c44a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#aee2395780f9ae582350307a1c908c44a">gen_poly_msg</a> ($gpm_poly_string)</td></tr>
+<tr class="memdesc:aee2395780f9ae582350307a1c908c44a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functia genereaza polinomul mesajului.  <a href="#aee2395780f9ae582350307a1c908c44a">More...</a><br /></td></tr>
 <tr class="separator:aee2395780f9ae582350307a1c908c44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf549c81c9ea6e8c4766257e83c8dc16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#acf549c81c9ea6e8c4766257e83c8dc16">poly_gen_x_pow_n</a> ($n)</td></tr>
+<tr class="memdesc:acf549c81c9ea6e8c4766257e83c8dc16"><td class="mdescLeft">&#160;</td><td class="mdescRight">genereaza polinomul x^n  <a href="#acf549c81c9ea6e8c4766257e83c8dc16">More...</a><br /></td></tr>
 <tr class="separator:acf549c81c9ea6e8c4766257e83c8dc16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad82c2a3581f527e72d13c49687ceb430"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#ad82c2a3581f527e72d13c49687ceb430">qr_gen_ec_blocks</a> ($qr_code_blocks, $qr_version, $qr_error_correction_level)</td></tr>
+<tr class="memdesc:ad82c2a3581f527e72d13c49687ceb430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genereaza blocurile corectoare de erori.  <a href="#ad82c2a3581f527e72d13c49687ceb430">More...</a><br /></td></tr>
 <tr class="separator:ad82c2a3581f527e72d13c49687ceb430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93079f3c34a44f2e349e3d5072ada477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#a93079f3c34a44f2e349e3d5072ada477">qr_interleave_across</a> ($qr_interleave_blocks)</td></tr>
+<tr class="memdesc:a93079f3c34a44f2e349e3d5072ada477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interclaseaza un singur set de date Interclaseaza un set de blocuri si returneaza rezultatul sub forma de vector.  <a href="#a93079f3c34a44f2e349e3d5072ada477">More...</a><br /></td></tr>
 <tr class="separator:a93079f3c34a44f2e349e3d5072ada477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a110dbcbbebce430ebb50bd0e194605"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__error__correction_8php.html#a4a110dbcbbebce430ebb50bd0e194605">qr_interleave_data</a> ($qr_code_blocks, $qr_ec_blocks, $qr_version)</td></tr>
+<tr class="memdesc:a4a110dbcbbebce430ebb50bd0e194605"><td class="mdescLeft">&#160;</td><td class="mdescRight">interclaseaza datele si le grupeaza intr-un singur sir de caractere  <a href="#a4a110dbcbbebce430ebb50bd0e194605">More...</a><br /></td></tr>
 <tr class="separator:a4a110dbcbbebce430ebb50bd0e194605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contine functii pentru generare coduri de corectie erori. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ad598810c753d49944376a676e3ef1240"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad598810c753d49944376a676e3ef1240">&#9670;&nbsp;</a></span>divide_poly_step()</h2>
 
@@ -123,6 +140,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Executa un pad de diviziune intre Polinomul mesajului $m si polinomul generator $g Pentru generarea codurilor corectoare de erori aceasta functie se apeleaza de mai multe ori in $qr_gen_ec_blocks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$m</td><td>Polinomul mesajului </td></tr>
+    <tr><td class="paramname">$g</td><td>Polinomul generator </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Restul impartirii lui $m la $g, Impratire in sensul algoritmului de generare Reed Solomon </dd></dl>
+
 </div>
 </div>
 <a id="aee2395780f9ae582350307a1c908c44a"></a>
@@ -140,6 +167,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Functia genereaza polinomul mesajului. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$</td><td>gpm_poly_string sirul de date pentru generarea polinomului </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>polinomul generat-un array cu termenul liber pe pozitia 0 </dd></dl>
 
 </div>
 </div>
@@ -169,6 +205,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>face inmultirea a doua polinoame in campuri Galois 256 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$p</td><td>array cu termenul liber pe pozitia 0-primul polinom </td></tr>
+    <tr><td class="paramname">$q</td><td>array cu termenul liber pe pozitia 0-al doilea polinom </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>rezultatul(un array cu termenul liber pe pozitia 0) </dd></dl>
+
 </div>
 </div>
 <a id="acf549c81c9ea6e8c4766257e83c8dc16"></a>
@@ -186,6 +232,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>genereaza polinomul x^n </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$n</td><td>exponent </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>polinomul returnat-array </dd></dl>
 
 </div>
 </div>
@@ -215,6 +270,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>afiseaza cu echo un polinom in notatie alfa </p>
+<dl class="section note"><dt>Note</dt><dd>functie de debug </dd></dl>
+
 </div>
 </div>
 <a id="add1310f4e9e33f691446bdd592a3becb"></a>
@@ -232,6 +290,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>face conversia unui polinom in notatie alfa </p>
+<dl class="section note"><dt>Note</dt><dd>functie de debug </dd></dl>
 
 </div>
 </div>
@@ -266,6 +327,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Genereaza blocurile corectoare de erori. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$qr_code_blocks</td><td>grupurile si blocurile corectoare de erori corespunzatoare grupurilor si blocurilor corectoare de erori </td></tr>
+    <tr><td class="paramname">$qr_version</td><td>versiunea de QR aplicata </td></tr>
+    <tr><td class="paramname">$qr_error_correction_level</td><td>nivelul de corectie erori </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>grupurile si blocurile corectoare de erori </dd></dl>
 <p>DEBUG </p>
 
 </div>
@@ -285,6 +357,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Interclaseaza un singur set de date Interclaseaza un set de blocuri si returneaza rezultatul sub forma de vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$qr_interleave_blocks</td><td>Datele de interclasat despartite in grupuri si blocuri </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>un array() cu datele interclasate care incepe de pe pozitia 0 </dd></dl>
 
 </div>
 </div>
@@ -320,6 +401,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>interclaseaza datele si le grupeaza intr-un singur sir de caractere </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$qr_code_blocks</td><td>blocurile de cod de interclasat </td></tr>
+    <tr><td class="paramname">$qr_ec_blocks</td><td>blocurile de error corection de interclasat </td></tr>
+    <tr><td class="paramname">$qr_version</td><td>versiunea codului QR </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>sirul de caractere cu datele interclasate </dd></dl>
+
 </div>
 </div>
 <a id="af1f0876e5453cd712defb87a98b8d3db"></a>
@@ -338,6 +430,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>intoarce logaritm in baza a in campuri Galois 256 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$a</td><td>baza </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>valoarea logaritmului </dd></dl>
+
 </div>
 </div>
 <a id="a04c6c7564f2bd40f1019d35d0c1a31a4"></a>
@@ -355,6 +456,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>intoarce 2 la puterea a in campuri Galois 256 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$a</td><td>exponent </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>2 la puterea a </dd></dl>
 
 </div>
 </div>
@@ -389,6 +499,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Imparte datele codificate in grupuri si blocuri. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$encoded_data</td><td>string cu datele codificate in binar </td></tr>
+    <tr><td class="paramname">$qr_version</td><td>versiunea de QR aplicata </td></tr>
+    <tr><td class="paramname">$qr_error_correction_level</td><td>nivel de corectie erori </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array cu datele impartite in grupuri si blocuri </dd></dl>
 
 </div>
 </div>

@@ -1,10 +1,18 @@
 <?php
+/** @file qr_matrix_generator.php 
+* Contine functii care ajuta la ganerarea matricilor QR
+*/
 define('QRM_WHITE', 0);
 define ('QRM_BLACK', 1);
 define('QRM_RESERVED', 2);
 define('QRM_DATA', 4);
 
+/*! 
+* @brief Genereaza matrice cu toate modulele si zonele rezervate gata alocate
+* @param $qr_version versiunea de QR aleasa
+* @return matrice QR necompletata
 
+*/
 function qr_matrix_gen_empty($qr_version)
 {
 	//Generate a qr Matrix
@@ -217,6 +225,11 @@ function qr_matrix_gen_empty($qr_version)
 }// Gen empty matrix
 
 //$qr_matrix = $qr_matrix_place_data($qr_matrix, $qr_data);
+/*! @brief Completeaza datele intr-o matrice
+* Matricea $qr_matrix este o matrice returnata de functia qr_matrix_gen_empty
+* @param $qr_matrix matrice returnata de functia qr_matrix_gen_empty
+* @param $qr_data un sir de caractere care reprezinta datele de completat
+*/
 function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 {
 	$qpd_up = 1;
@@ -323,9 +336,12 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  */
 
-//Functia calculeaza masca optima pentru matricea $qr_matrix,
-//		o aplica si returneaza masca aplicata
 
+/*!
+* @brief Functia calculeaza masca optima pentru matricea $qr_matrix,o aplica si returneaza masca aplicata
+* @param $qr_matrix o matrice cu toate datele plasate(functia qr_matrix_place_data)
+* @return numarul mastii aplicate(intre 0 si 5,inclusiv)
+*/
 function qr_matrix_mask_data(&$qr_matrix)
 {
 	$qr_data_mask = 0;
@@ -335,20 +351,21 @@ function qr_matrix_mask_data(&$qr_matrix)
 	 var_dump(ascii_print($dbg_matrix));
 	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
 	//echo "Mask #0:<br>";//DEBUG
-	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	//echo " qmm_min_score = $qmm_min_score<br>"; // DEBUG
 	//echo "Mask #0:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, 0);
 	//qr_format_apply($dbg_matrix, "H", 0); var_dump(ascii_print2($dbg_matrix));
 	//for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)//Ideal. Dar mastile #6 si #7 nu functionaeza cum trebuie
+	*/
+	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	for($qmm_mask_number = 1; $qmm_mask_number <= 5; $qmm_mask_number++)//This should word tho
 
 	{
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
 
-		/DEBUG
-		echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
-		qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
-		DEBUG! */
+		//DEBUG
+		//echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
+		//qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
+		//DEBUG
 		if($qmm_aux_score < $qmm_min_score)
 		{
 			$qr_data_mask = $qmm_mask_number;
@@ -360,7 +377,10 @@ function qr_matrix_mask_data(&$qr_matrix)
 	return $qr_data_mask;
 }
 
-
+/*! @brief Calculeaza scorul de penalizare pentru o matrice
+* @param $qr_matrix matrice de evaluat
+* @return scorul de penalizare
+*/
 function qr_matrix_penalty_score(& $qr_matrix)
 {
 	$qmp_score = 0;
@@ -573,7 +593,10 @@ function qr_matrix_penalty_score(& $qr_matrix)
 	//echo "----------------<br><b>TOTAL $qmp_score</b><br>";
 	return $qmp_score;
 }
-
+/*! @brief inverseaza culoarea unui modul dat ca parametru 
+* @param $bit modulul de inversat
+* @return modulul cu culoarea de inversat
+*/
 function qr_matrix_flip_bit($bit)
 {
 	$bit = $bit ^ QRM_BLACK; // This works because XOR
@@ -584,7 +607,12 @@ function qr_matrix_flip_bit($bit)
 	//QRM_BLACK = 1 -> A XOR QRM_BLACK = NOT A
 	return $bit;
 }
+/*! @brief aplica o masca unei matrici data ca parametru
+* @param $qr_matrix matricea careia i se aplica masca
+* @param $qr_data_mask masca aplicata
+* @return matricea transformata
 
+*/
 function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 {
 	$qma_row = count($qr_matrix);
@@ -670,6 +698,10 @@ function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 
 
 //qr_matrix_add_quiet_zone($qr_matrix);
+/*! @brief adauga o zona de 4 module albe in jurul matricii
+* @param $qr_matrix matricea careia i se aplica
+* @return matricea modificata
+*/
 function qr_matrix_add_quiet_zone($qr_matrix)
 {
 	//Please note that the QR code specification requires that the QR matrix be surrounded by a quiet zone: a 4-module-wide area of light modules.
@@ -710,9 +742,13 @@ function qr_matrix_add_quiet_zone($qr_matrix)
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  */
 
-
-//Source:
-//http://www.thonky.com/qr-code-tutorial/format-version-tables
+/*! Source:
+* http://www.thonky.com/qr-code-tutorial/format-version-tables
+* @brief Returneaza stringul de format corespunzator nivelului de corectie erori si a mastii aplicate
+* @param $qr_error_correction_level nivelul de corectie erori
+* @param $qr_mask_pattern masca aplicata
+* @return stringul de format corespunzator
+*/
 function qr_format_string($qr_error_correction_level, $qr_mask_pattern)
 {
 	$qfs_database = array(
@@ -739,7 +775,12 @@ function qr_format_string($qr_error_correction_level, $qr_mask_pattern)
 		);
 	return $qfs_database[$qr_error_correction_level][$qr_mask_pattern];
 }
-
+/*!
+* @brief aplica informatii de format matricii $qr_matrix
+* @param $qr_matrix matricea careia ii sunt aplicate informatiile
+* @param $qr_error_correction_level nivelul de corectie erori
+* @param $qr_data_mask masca aplicata
+*/
 function qr_format_apply(& $qr_matrix, $qr_error_correction_level, $qr_data_mask)
 {
 	$qfa_matrix_size = count($qr_matrix);

@@ -6,15 +6,78 @@
 		<link rel="stylesheet" type="text/css" href="css/w3.css">
 		<script type="text/javascript" src="javascript/script.js"></script>
 	</head>
-	<body>
-	<header class="w3-container w3-theme w3-padding w3-center">
-		<h1 class ="w3-animate-bottom w3-xxxlarge">Lowerthyi ghhui</h1>
+	<body class="w3-display-container">
+	<header class="w3-container w3-teal w3-padding w3-center">
+		<h1 class ="w3-animate-top w3-xxxlarge">Meeting Pit</h1>
 	</header>
+	<section id="main-wrapper" class="w3-row-padding w3-center w3-margin-top">
+		<section id="join-wrapper" class="w3-half">
+			<section id="join-card" class="w3-card-2" style="min-height:469px">
+				<head id="join-head">
+				  <h3 class="w3-teal w3-padding-top">Join</h3>
+				    <section id="join-form-wrapper" class="w3-row-padding w3-center">
+					  <form class="w3-panel" style="border: 0px solid !important;"  action="pit.php" 
+					  onsubmit="return js_validate_join(this)" method="post">
+								<div class="w3-group">
+									<input class="w3-input w3-deep-orange" type ="text" required="required" name="idConversatie" 
+									onchange="js_validate_join(this)" id="idConversatie">
+									<label class="w3-label w3-validate">Id conversație</label>
+								</div>
+
+								<div class="w3-group">
+									<input class="w3-input" type ="text" required="required"  name ="nickName" 
+									onchange="js_validate_join(this)" id= "nickname">
+									<label class="w3-label w3-validate">Utilizator</label>
+								</div>
+
+								<div class="w3-group">
+									<input type="hidden" name="isValidJoin" id="isValidJoin" value="0"/>
+									<input type="submit" class="w3-btn" name="join" id="join" value="Join"/>
+								</div>	
+					  </form>
+					</section>
+				</head>
+			</section>
+		</section>
+		<section id="new-wrapper" class="w3-half">
+			<section id="new-card" class="w3-card-2" style="min-height:469px">
+			<head id="join-head">
+					<h3 class="w3-teal w3-padding-top">New Conversation</h3>
+					<section id="join-form-wrapper" class="w3-row-padding w3-center">
+					  <form class="w3-panel" style="border: 0px solid !important;"  action="pagina.php" 
+					  onsubmit="return js_validate(this)" method="post">
+								<div class="w3-group">
+									<input class="w3-input" type ="text" required="required" name ="numeConversatie" id ="numeConversatie">
+									<label class="w3-label w3-validate">Nume conversație</label>
+								</div>
+
+								<div class="w3-group">
+									<input class="w3-input" type ="text" required="required"  name ="adminName" id= "adminName">
+									<label class="w3-label w3-validate">Nume Administrator</label>
+								</div>
+
+								<div class="w3-group">
+									<input class="w3-input" type ="text" required="required"  name ="passwordInput" id= "passwordInput">
+									<label class="w3-label w3-validate">Parola</label>
+								</div>
+
+								<div class="w3-group">
+									<input type="hidden" name="isValidJoin" id="isValidNew" value="0"/>
+									<input type="submit" class="w3-btn" name="newConvBtn" id="newConvBtn" value="Create"/>
+								</div>	
+					  </form>
+					  </section>
+				</head>
+			</section>
+		</section>
+	</section>
+
+	<!-- 
 	<div class="w3-row ">
 		<div class="w3-center w3-margin-top">
 			<div class ="w3-half" id ="join_div">
 					<div class ="w3-card-2 " style="min-height:460px">
-						<h4><b>Join</b></h4>
+						<h4 class="w3-padding"><b>Join</b></h4>
 						<div class="w3-padding w3-row" >
 							<form class ="w3-container w3-center" style="border: 2px solid !important"  action="pagina.php" onsubmit="return js_validate(this)" method="post">
 								<div class="w3-group">
@@ -29,22 +92,25 @@
 								</div>
 								<div class="w3-group">
 									<input type="hidden" name="isValidJoin" id="isValidJoin" value="0"/>
-									<input type="submit" class="w3-btn" name="join" id="join" value="join"/>
+									<input type="submit" class="w3-btn" name="join" id="join" value="Join"/>
 								</div>	
 							</form>
 						</div>
 
 					</div>
 			</div>
-		</div> <!--sfarsit div sectiune join -->
+		</div> 
+		-->
+		<!--sfarsit div sectiune join -->
 
 
 		<!--sectiunea de new connection -->
+		<!-- 
 			<div class ="w3-half w3-padding" id ="new_div">
 					<div class ="w3-card-2 " style="min-height:460px">
-						<h4 style="text-align:center"><b>New</b></h4>
-						<div class="w3-padding w3-row" >
-							<form class ="w3-container w3-center " style="border: 1px solid !important;width: 70%; "  action="pagina.php" onsubmit="return js_validate(this)" method="post">
+						<h4 class="w3-padding" style="text-align:center"><b>New</b></h4>
+						<div class="w3-padding w3-row w3-display-container">
+							<form class ="w3-container w3-center w3-display-topmiddle" style="border: 1px solid !important;width: 70%; "  action="pagina.php" onsubmit="return js_validate(this)" method="post">
 								<div class="w3-group">
 									<label class="w3-label w3-validate">Nume conversație:</label>
 									<input class="w3-input" type ="text" required="required" name ="numeConversatie" id ="numeConversatie">
@@ -61,7 +127,7 @@
 									
 								</div>
 								<div class="w3-group">
-									<input type="submit" class="w3-btn" name="newConversation" id="newConversation" value="newConversation"/>
+									<input type="submit" class="w3-btn" name="newConversation" id="newConversation" value="Conversatie Noua"/>
 								</div>	
 							</form>
 						</div>
@@ -69,7 +135,8 @@
 					</div>
 			</div>
 	</div>
-	<footer class="w3-container w3-theme w3-padding w3-center">
+	Ana -->
+	<footer class="w3-row w3-theme w3-padding w3-center w3-margin-top" >
 	&copy;TI PROIECT 2017
 	</footer>
 	</body>
