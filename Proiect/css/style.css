@@ -1,8 +1,14 @@
 body {
+    width: 100%;
+    height: 100%;
+    position: absolute;
     font:12px arial;
     color: #222;
     text-align:center;
-    padding:35px; }
+    padding:0px; 
+    margin: 0px;
+ }
+
   
 form, p, span {
     margin:0;
@@ -71,8 +77,15 @@ a {
   
 .msgln { margin:0 0 2px 0; }
 
+#join_section{
+    float:right;
+    display: table;
+    height: 60%;
+    width: 50% ; 
+    background-color: green;
+}
 
-#join_button,#new_button{
+#join_button{
 
     display:inline-block;
     color:#444;
@@ -80,10 +93,33 @@ a {
     background:#DDD;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     cursor:pointer;
-    vertical-align:middle;
+    /*vertical-align:middle;*/
     max-width: 100px;
     padding: 5px;
     text-align: center;
+
+}
+#new_section{
+    display: table;
+    float:left;
+    height: 60%;
+    width: 50%;
+    background-color: red;
+}
+#new_button
+{
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    max-width: 100px;
+    padding: 15px;
+   /* display:table-cell; */
+    vertical-align: middle;
+    text-align: center; 
+}
+
 
 #join_button:active {
     color:red;
@@ -93,4 +129,42 @@ a {
 #new_button:active {
     color:red;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+footer {
+    font-size: 1.5em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+  height: 10%;
+}
+#banner{
+    background-image: url(../img/i1.jpg);
+    background-color: blue;
+    text-align: center;
+    height: 30%;
+    display: table;
+    width: 100%;
+}
+.banner_title{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+main{
+    margin: 0px;
+    height: 89%;
+
+
+}
+.v_align_wrapper{
+    display: table;
+}
+.v_align{
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center; 
 }
