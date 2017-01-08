@@ -1,5 +1,17 @@
-<?php require_once "conversation.php"; ?>
 <?php
+/** @file chat_v2.php
+*Prelucrarea fisierelor XML de conversatie
+*In functie de parametrii trimisi prin POST, se modifica sau se afiseaza fisierul log.xml al fiecarei conversatii
+
+
+*/
+?>
+<?php require_once "conversation.php"; ?>
+
+<?php
+
+
+
 /*
 if($_SERVER['REQUEST_METHOD'] == "GET") #DEBUG ONLY!
 {
@@ -33,6 +45,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET") #DEBUG ONLY!
 	}
 }
 */
+
 
 if($_SERVER['REQUEST_METHOD'] == "POST") #DEBUG ONLY!
 {
