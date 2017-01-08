@@ -21,7 +21,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 	else {
 		die ("No User Name!<b>");
 	}
-	
 }
 ?>
 <html>
@@ -29,6 +28,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 		
 	</head>
 	<body>
+	<form action="return false;">
+		<input type="hidden" name="nickName" value=<?php echo '"' . $usr_name . '"' ?>/>
+		<input type="hidden" name="idConversatie" value=<?php echo '"' . $conv_uid . '"' ?>/>
+	</form>
 		<main> <section>
 			<header><section>
 				HEADER		
