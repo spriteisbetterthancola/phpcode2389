@@ -1,4 +1,8 @@
 <?php 
+/** @file qr_error_correction.php
+*@brief Contine functii pentru generare coduri de corectie erori
+*/
+
 //TODO 0. Crush that bug
 //TODO 1. Finish the code!!!
 //TODO 1. Redenumire functii si parametri pentru simularea unui namespace.
@@ -77,7 +81,12 @@
  END OF COMMENT 
 */
 
-
+/*! @brief Imparte datele codificate in grupuri si blocuri
+* @param $encoded_data string cu datele codificate in binar
+* @param $qr_version versiunea de QR aplicata
+* @param $qr_error_correction_level nivel de corectie erori
+* @return array cu datele impartite in grupuri si blocuri
+*/
 function qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_level)
 {
 	//http://www.thonky.com/qr-code-tutorial/error-correction-table
@@ -141,6 +150,10 @@ function qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
+/*! @brief intoarce 2 la puterea a in campuri Galois 256
+* @param $a exponent
+* @return 2 la puterea a 
+*/
 function qr_pow($a)
 {
 	$v_pow = array(
@@ -159,7 +172,10 @@ function qr_pow($a)
 	 44,  88, 176, 125, 250, 233, 207, 131,  27,  54, 108, 216, 173,  71, 142,   1);
 	return $v_pow[$a];
 }
-
+/*! @brief intoarce logaritm in baza a in campuri Galois 256
+* @param $a baza
+* @return valoarea logaritmului
+*/
 function qr_log($a)
 {
 	$v_log = array(
@@ -178,6 +194,9 @@ function qr_log($a)
     174, 213, 233, 230, 231, 173, 232, 116, 214, 244, 234, 168,  80,  88, 175);
 	return $v_log[$a];
 }
+/*! @brief face conversia unui polinom in notatie alfa
+* @note functie de debug
+*/
 
 function  qr_alpha_pol($polin)
 {
@@ -194,7 +213,11 @@ function  qr_alpha_pol($polin)
 	return $polin;
 }
 
+
 //afiseaza polinomul dat in notatia alfa
+/*! @brief afiseaza cu echo un polinom in notatie alfa
+* @note functie de debug
+*/
 function print_polin($polin, $pp_al_mode = true)
 {
 	$n = max(array_keys($polin));
@@ -238,6 +261,11 @@ function print_polin($polin, $pp_al_mode = true)
 }
 
 //inmulteste polinomul p cu polinomul q
+/*! @brief face inmultirea a doua polinoame in campuri Galois 256
+* @param $p array cu termenul liber pe pozitia 0-primul polinom
+* @param $q array cu termenul liber pe pozitia 0-al doilea polinom
+* @return rezultatul(un array cu termenul liber pe pozitia 0)
+*/
 function multiply_polynoms($p, $q)
 {
 	$grad_p = count($p) - 1;
@@ -282,6 +310,13 @@ function multiply_polynoms($p, $q)
 
 //$m - Polinom mesaj
 //$g - Polinom de generare
+/*!
+ * @brief Executa un pad de diviziune intre Polinomul mesajului $m si polinomul generator $g
+ * Pentru generarea codurilor corectoare de erori aceasta functie se apeleaza de mai multe ori in $qr_gen_ec_blocks
+ * @param $m Polinomul mesajului
+ * @param $g Polinomul generator
+ * @return Restul impartirii lui $m la $g, Impratire in sensul algoritmului de generare Reed Solomon
+ */
 function divide_poly_step($m, $g)
 {
 	$dps_r = array();// $r = $p * $q[n]
@@ -305,7 +340,10 @@ function divide_poly_step($m, $g)
 }
 
 
-//Functia genereaza polinomul mesajului
+/*! @brief Functia genereaza polinomul mesajului
+* @param $ gpm_poly_string sirul de date pentru generarea polinomului
+* @return polinomul generat-un array cu termenul liber pe pozitia 0
+*/
 function gen_poly_msg($gpm_poly_string)
 {
 	$gpm_poly_dec = array();
@@ -320,6 +358,10 @@ function gen_poly_msg($gpm_poly_string)
 
 
 
+/*! @brief genereaza polinomul x^n 
+* @param $n exponent
+* @return polinomul returnat-array
+*/
 function poly_gen_x_pow_n($n)
 {
 	//genereaza polinomul x^n
@@ -327,7 +369,12 @@ function poly_gen_x_pow_n($n)
 	$r[$n] = 1;
 	return $r;
 }
-
+/*! @brief Genereaza blocurile corectoare de erori
+* @param $qr_code_blocks grupurile si blocurile corectoare de erori corespunzatoare grupurilor si blocurilor corectoare de erori
+* @param $qr_version versiunea de QR aplicata
+* @param $qr_error_correction_level nivelul de corectie erori
+* @return grupurile si blocurile corectoare de erori
+*/
 function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level)
 {
 	$qr_ec_blocks = array();
@@ -435,6 +482,13 @@ function qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_lev
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
+
+/*!
+ * @brief Interclaseaza un singur set de date
+ * Interclaseaza un set de blocuri si returneaza rezultatul sub forma de vector
+ * @param $qr_interleave_blocks Datele de interclasat despartite in grupuri si blocuri
+ * @return un array() cu datele interclasate care incepe de pe pozitia 0
+ */
 function qr_interleave_across($qr_interleave_blocks)
 {
 	$qia_r = array();
@@ -474,6 +528,14 @@ function qr_interleave_across($qr_interleave_blocks)
 	}
 	return $qia_r;
 }
+
+/*!
+* @brief interclaseaza datele si le grupeaza intr-un singur sir de caractere
+* @param $qr_code_blocks blocurile de cod de interclasat
+* @param $qr_ec_blocks blocurile de error corection de interclasat
+* @param $qr_version versiunea codului QR
+* @return sirul de caractere cu datele interclasate
+*/
 function qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version)
 {
 	if(isset($qr_ec_blocks[2]) == FALSE)
