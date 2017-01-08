@@ -1,9 +1,12 @@
-<?php require_once "qr_error_correction.php"; ?>
-<?php require_once "qr_matrix_generator.php"; ?>
 <?php
-//Generator QR
 /** @file gen_qr.php Genereaza un cod QR in format .png
 */
+ require_once "qr_error_correction.php"; ?>
+<?php require_once "qr_matrix_generator.php"; ?>
+<?php
+
+
+
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
 	if(isset($_GET["text"]))
@@ -14,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET")
 		$script_time = microtime(true) - $script_time;
 		//echo "Execution time: {$script_time}[s]<br>";
 	}
-}
+};
 ?>
 <?php
 /*!
@@ -109,7 +112,7 @@ function generate_qr($text)
 	$qr_code_blocks = qr_split_encoded_data($encoded_data, $qr_version, $qr_error_correction_level);
 	$qr_ec_blocks = qr_gen_ec_blocks($qr_code_blocks, $qr_version, $qr_error_correction_level);
 	unset($encoded_data);
-	/*/DEBUG
+	/*DEBUG
 	echo "Data blocks:<br>";
 	for($b=1; $b<=4; $b++)
 	{
@@ -128,7 +131,7 @@ function generate_qr($text)
 		}
 		echo "<br>";
 	}
-	// !DEBUG */
+	*/
 
 	// 4 - Interclasare date
 	$qr_data = qr_interleave_data($qr_code_blocks, $qr_ec_blocks, $qr_version);
@@ -167,11 +170,17 @@ function intdiv_1($a, $b){
     return ($a - $a % $b) / $b;
 }
 
+/*
 function to_binary_string($value)//Nu e folosita!
 {
 	return decbin($value);
 }
-
+*/
+/*!
+* @brief Codifica un string in mod alfazecimal
+* @param $text textul de codificat
+* @return un sir de caractere reprezentand valorile convertite in binar ale sirului codificat
+*/
 function alfa_encode($text)
 {
 	$qr_alphanum_table = array(
@@ -203,8 +212,13 @@ function alfa_encode($text)
 	}
 	return $output;
 }
+/*!
+* @brief Codifica un sir de caractere in mod Byte
+*https://kb.iu.edu/d/aepu ISO8859-I Char set
+* @param $text sirul de caractere de codificat
+* @return un sir de caractere reprezentand valorile convertite in binar ale sirului codificat
+*/
 
-//https://kb.iu.edu/d/aepu ISO8859-I Char set
 function byte_encode($text)
 {
 	$qr_encode_byte_table = array( " " => "00100000",
@@ -233,7 +247,12 @@ function byte_encode($text)
 	}
 	return $output;
 }
-
+/*!
+* @brief printeaza o matrice in format ASCII  folosind caracterele . space ` si #
+* @param $matrix Matricea de printat
+* @return un sir de caractere care va fi ptintat cu echo sau var_down
+* @note functia nu este folosita decat pentru debug
+*/
 function ascii_print($matrix)
 {
 	$output = "<pre>";
@@ -261,7 +280,7 @@ function ascii_print($matrix)
 			if($j<$lines-1) {
 				$output .= " ";
 			}
-			//*/
+			*/
 			$output .= ($matrix[$i][$j] % 2) . " ";
 		}
 		$output .= "\n";
@@ -269,7 +288,11 @@ function ascii_print($matrix)
 	$output .= "\n</pre>";
 	return $output;
 }
-
+/*!
+* @brief printeaza o matrice in format Unicode (preferabil fata de ascii_print)
+* @param $qr_matrix Matricea de printat
+* @return un sir de caractere care va fi printat cu echo sau var_down
+*/
 function ascii_print2($qr_matrix)
 {
 	$output = "<br>";
@@ -292,7 +315,13 @@ function ascii_print2($qr_matrix)
 	}
 	return $output;
 }
+/*!
+* @brief scrie o matrice in format .png
+* @param $qr_matrix Matricea de printat
+* @param $img_name numele imaginii in care va fi salvata matricea
+* @param $img_module_size dimensiunea in pixeli a unui modul al matricii QR
 
+*/
 function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 8)
 {
 	$qr_matrix_size = count($qr_matrix);

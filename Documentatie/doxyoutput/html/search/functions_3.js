@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['divide_5fpoly_5fstep',['divide_poly_step',['../qr__error__correction_8php.html#ad598810c753d49944376a676e3ef1240',1,'qr_error_correction.php']]]
+  ['generate_5fqr',['generate_qr',['../gen__qr_8php.html#adc039f2ff40a6b9b5e7e8f06b17cd5f0',1,'gen_qr.php']]]
 ];

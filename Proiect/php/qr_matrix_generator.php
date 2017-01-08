@@ -315,11 +315,13 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 	//return $qr_matrix;
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
  * * * * * * * * * * * *  DATA MASKING FUNCTIONS   * * * * * * * * * * *
  * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ */
 
 //Functia calculeaza masca optima pentru matricea $qr_matrix,
 //		o aplica si returneaza masca aplicata
@@ -327,12 +329,11 @@ function qr_matrix_place_data(&$qr_matrix, &$qr_data)
 function qr_matrix_mask_data(&$qr_matrix)
 {
 	$qr_data_mask = 0;
-	/*/ DEBUG
+	/* DEBUG
 	 echo "Mask: $qr_data_mask<br>";
 	 $dbg_matrix = qr_matrix_apply_mask($qr_matrix, 0);
 	 var_dump(ascii_print($dbg_matrix));
 	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
-	//*///!DEBUG
 	//echo "Mask #0:<br>";//DEBUG
 	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	//echo " qmm_min_score = $qmm_min_score<br>"; // DEBUG
@@ -344,10 +345,10 @@ function qr_matrix_mask_data(&$qr_matrix)
 	{
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
 
-		/*/DEBUG
+		/DEBUG
 		echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
 		qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
-		// !DEBUG */
+		DEBUG! */
 		if($qmm_aux_score < $qmm_min_score)
 		{
 			$qr_data_mask = $qmm_mask_number;
@@ -534,7 +535,7 @@ function qr_matrix_penalty_score(& $qr_matrix)
 		{
 			echo "Found $dbg_pma_c matches 2 in col $i<br>";
 		}
-		//*///!DEBUG
+		*/
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_row);
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_2, $qmp_string_row);
 		$qmp_aux_score += 40 * preg_match_all($qmp_pattern_1, $qmp_string_column);
@@ -656,14 +657,14 @@ function qr_matrix_apply_mask($qr_matrix, $qr_data_mask)
 					# code...
 					echo "ERROR! Invalid data mask {$qr_data_mask}!";
 					break;
-			}//!switch
+			}//switch
 
 			if($qma_flip == true && (($qr_matrix[$row][$column] & QRM_DATA) != 0))//TODO Breakpoint here
 			{
 				$qr_matrix[$row][$column] = qr_matrix_flip_bit($qr_matrix[$row][$column]);
 			}
-		}//!for j
-	}//!for i
+		}//for j
+	}//for i
 	return $qr_matrix;
 }
 
@@ -701,11 +702,13 @@ function qr_matrix_add_quiet_zone($qr_matrix)
 	}
 	return $qr_matrix_2;
 }
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
  * * * * * * * * * * * *  FORMAT STRING FUNCTION   * * * * * * * * * * *
  * * * * * * * * * * * *  ----------------------   * * * * * * * * * * *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ */
 
 
 //Source:
@@ -753,7 +756,7 @@ function qr_format_apply(& $qr_matrix, $qr_error_correction_level, $qr_data_mask
 			"y" => array(0 => 8, 8, 8, 8, 8, 8, 8, 8, $qfa_matrix_size - 7, $qfa_matrix_size - 6, $qfa_matrix_size - 5, $qfa_matrix_size - 4, $qfa_matrix_size - 3, $qfa_matrix_size - 2, $qfa_matrix_size - 1)
 			)
 		);
-	//$dbg_log = fopen("log.txt", "w");//DEBUG
+	//$dbg_log = fopen("log.txt", "w");DEBUG
 
 	for($i = 0; $i < 15; $i++)
 	{
