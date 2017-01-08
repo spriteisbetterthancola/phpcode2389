@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php 
 //Seteaza variabilele de sesiune
+require_once("php/conversation.php");
 session_start();
 if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 {
