@@ -24,9 +24,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 		echo $ce?"1":"0";
 		//var_dump($_POST);
 	}
-}
+};
 /*!
- @brief 
+ * @brief genereaza un ID nou pentru conversatie
+ * ID-ul este aleator
+ * @return un sir de caractere reprezentand noul ID(caractere hexazecimale)
 */
 function conv_gen_uid()
 {
@@ -46,13 +48,19 @@ function conv_gen_uid()
 	
 	return $aux;
 }
-
+/*!
+* @brief Verifica daca conversatia cu ID-ul $uid exista
+* @param $uid ID-ul conversatiei
+*/
 function conv_exist($uid)
 {
 	$dirExist = is_dir("logs/conv_" . $uid);
 	return $dirExist;
 }
-
+/*!
+* @brief Creeaza o noua conversatie cu parametrii dati 
+* @param $admin_pass parola administratorului
+*/
 function conv_create($admin_pass)
 {
 	$cc_uid = conv_gen_uid();
@@ -95,7 +103,15 @@ function conv_create($admin_pass)
 	fwrite($cc_file_log, $cc_xml_log);
 	fclose($cc_file_log);
 }
-
+/*!
+* @brief updateaza fisierul de configurare al conversatiei 
+* Fisierul config.xml din directorul conversatie este updatat 
+* astfel incat sa contina noile valori de configuratie date ca 
+* parametri
+* @param $uid ID-ul conversatiei
+* @param $admin_pass parola administratorului
+* @param $timestamp data de creare a conversatiei
+*/
 function conv_update_config($uid, $admin_pass, $timestamp)
 {
 	$cu_file_base = "logs/conv_" . $uid;

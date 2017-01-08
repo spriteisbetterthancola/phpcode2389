@@ -2,6 +2,8 @@
 <?php require_once "qr_matrix_generator.php"; ?>
 <?php
 //Generator QR
+/** @file gen_qr.php Genereaza un cod QR in format .png
+*/
 if($_SERVER["REQUEST_METHOD"] == "GET")
 {
 	if(isset($_GET["text"]))
@@ -15,7 +17,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET")
 }
 ?>
 <?php
-
+/*!
+* @brief Genereaza un cod QR care va encoda textul primit ca parametru 
+* @param $text textul de reprezentat sub forma de cod QR
+*/
 function generate_qr($text)
 {
 	//1 - Analiza datelor
@@ -151,6 +156,12 @@ function generate_qr($text)
 	//echo '<br><img src="img.png" height="{$img_size}" width="{$img_size}"><br>';//Daca imaginea a fost salvata in fisier
 	//function qr_write_image(& $qr_matrix, $img_name, $img_module_size = 4)
 }
+/*!
+* @brief implementeaza operatia de impartire cu rest  intre 2 numere
+* @param $a deimpartitul
+* @param $b impartitorul
+* @return catul impartirii celor 2 numere
+*/
 
 function intdiv_1($a, $b){
     return ($a - $a % $b) / $b;
