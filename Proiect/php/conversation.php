@@ -11,6 +11,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET")
 	}
 }
 */
+
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	if(isset($_POST["conv_exist"]))
@@ -82,6 +83,11 @@ function conv_create($admin_pass)
 	fwrite($cc_file_conf, $cc_xml_conf);
 	fclose($cc_file_conf);
 
+	$cc_file_log = fopen($cc_file_base . "/log.xml", "w");
+	$cc_xml_log = '<?xml version="1.0" encoding="UTF-8"?>' . $cc_endl;
+	$cc_xml_log .= "<conversation></conversation>" . $cc_endl;
+	fwrite($cc_file_log, $cc_xml_log);
+	fclose($cc_file_log);
 }
 
 function conv_update_config($uid, $admin_pass, $timestamp)

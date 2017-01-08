@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php 
+//Seteaza variabilele de sesiune
+session_start();
+?>
 <html>
 	<head>
 		
@@ -15,7 +19,7 @@
 			</aside>
 			<section>
 				<section>
-					
+					Main Chat boddy
 				</section>
 			</section>
 			<footer><section>
