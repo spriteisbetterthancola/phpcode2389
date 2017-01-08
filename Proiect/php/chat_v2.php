@@ -89,6 +89,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 	}
 }
 */
+/*!
+* Scrie in fisierul log.xml din directorul conversatiei un mesaj nou
+@param $conv_uid id-ul conversatiei
+@param $usr_nick numele expeditorului
+@param $usr_msg textul mesajului
+*/
 function cnv_push_msg($conv_uid, $usr_nick, $usr_msg)
 {
 	$cpm_file_log_name = "logs/conv_" . $conv_uid . "/log.xml";
@@ -110,6 +116,10 @@ function cnv_push_msg($conv_uid, $usr_nick, $usr_msg)
 	$cpm_xml->asXML($cpm_file_log_name);
 	//$cu_xml->asXML($cu_file_base . '/config.xml');//Write to file
 }
+/*!
+* Afiseaza continutul fisierului log.xml al conversatiei  cu ID-ul $conv_uid
+@param $conv_uid id-ul conversatiei
+*/
 
 function cnv_pull_msg($conv_uid)
 {

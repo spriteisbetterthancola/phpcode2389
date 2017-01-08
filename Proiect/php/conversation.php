@@ -1,4 +1,8 @@
 <?php
+/** @file conversation.php 
+@brief Gestioneaza crearea de noi conversatii
+
+*/
 
 //var_dump(conv_update_config("80bf99c", "parola", time()));
 //var_dump(conv_exist("80bf99c"));
@@ -21,7 +25,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 		//var_dump($_POST);
 	}
 }
-
+/*!
+ @brief 
+*/
 function conv_gen_uid()
 {
 	$uid = substr(hash("sha512", rand()), 50, 6);
