@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-
-	<head>
 		<title> Home </title>
 		<meta charset="UTF-8">
-		<link  type="text/css" rel ="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
-		<section id = "S1">
-			<div  class="button" id="new_button">NEW</div>
-			<div  class ="button" id = "join_button">JOIN</div>
-			<input type="text" name= "ceva">
-		</section>
+		<main>
+			<header id="banner">
+				<h1 class ="banner_title">Lorem Ipsum</h1>
+			</header>
+			<section id = "new_section">
+				<div id="new_button">NEW</div>
+			</section>
+			<section id ="join_section">
+				<div  id ="join_button">JOIN</div>
+				Id Conversatie:<input type="text" id= "idConversatie">
+				Nickname:<input type="text" id="nickName">
+			</section>
+		</main>
+		<footer >&copy;TI PROIECT 2017</footer>
 	</body>
 
 </html>
