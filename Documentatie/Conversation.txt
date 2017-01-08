@@ -1,8 +1,17 @@
 	Structura fiecarei conversatii 
 	
 		Fiecarei  conversatii nou create ii va fi atribuit un fisier .xml. Numele acestui fisier  va fi strans legat de id-ul primit la crearea conversatiei.
-	De exemplu daca id-ul unei conversatii este 000012,toate detaliie legate de conversatia respectiva vor fi salvate in fisierul 12.xml.
-	Structura fisierului xx.xml va fi urmatoarea:
+	De exemplu daca id-ul unei conversatii este 000012,toate detaliie legate de conversatia respectiva vor fi salvate in fisierul logs/conv_000012/*.xml
+	Vor exista 2 fisiere:
+		config.xml si log.xml
+
+	config.xml
+	---------------------------
+	<root>
+		<creation_date> ??? </creation_date>
+		<admin_pass> hash pt. parola adminului </admin_pass>
+	</root>
+
 		<conversation>
 			<configuration>
 				<creation_date>	???? </creation_date>
