@@ -12,13 +12,15 @@
 		<admin_pass> hash pt. parola adminului </admin_pass>
 	</root>
 
-		<conversation>
-			<configuration>
-				<creation_date>	???? </creation_date>
-			</configuration>
-			<message>
-				<message_body> ???? </message_body>  #sau <m_body></m_body>
-				<sender_name> ??? </sender_name>
-				<timestamp> ??? </timestamp>
-			</message>
-		</conversation>
+	log.xml
+	<conversation>
+		<message>
+			<message_body> ???? </message_body>
+			<sender_name> ??? </sender_name>
+			<timestamp> ??? </timestamp>
+		</message>
+	.......
+		<message>
+			....
+		</message>
+	</conversation>
