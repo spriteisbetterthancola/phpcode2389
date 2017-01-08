@@ -22,10 +22,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 		die ("No User Name!<b>");
 	}
 }
+
+//DEBUG ONLY!!!
+$usr_name = "Ana";
+$conv_uid = "";
 ?>
 <html>
 	<head>
-		
+		<link rel="stylesheet" type="text/css" href="css/w3.css">
 	</head>
 	<body>
 	<form action="return false;">
@@ -46,9 +50,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 					Main Chat boddy
 				</section>
 			</section>
-			<footer><section>
-				Footer - f.subtire (ascuns pe mobil)
-			</section></footer>
 		</section></main>
 	</body>
 </html>

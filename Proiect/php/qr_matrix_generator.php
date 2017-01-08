@@ -335,20 +335,21 @@ function qr_matrix_mask_data(&$qr_matrix)
 	 var_dump(ascii_print($dbg_matrix));
 	 $dbg_score = qr_matrix_penalty_score($dbg_matrix);
 	//echo "Mask #0:<br>";//DEBUG
-	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	//echo " qmm_min_score = $qmm_min_score<br>"; // DEBUG
 	//echo "Mask #0:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, 0);
 	//qr_format_apply($dbg_matrix, "H", 0); var_dump(ascii_print2($dbg_matrix));
 	//for($qmm_mask_number = 1; $qmm_mask_number <= 7; $qmm_mask_number++)//Ideal. Dar mastile #6 si #7 nu functionaeza cum trebuie
+	*/
+	$qmm_min_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qr_data_mask));
 	for($qmm_mask_number = 1; $qmm_mask_number <= 5; $qmm_mask_number++)//This should word tho
 
 	{
 		$qmm_aux_score = qr_matrix_penalty_score(qr_matrix_apply_mask($qr_matrix, $qmm_mask_number));
 
-		/DEBUG
-		echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
-		qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
-		DEBUG! */
+		//DEBUG
+		//echo "Mask #$qmm_mask_number:<br>"; $dbg_matrix = $qr_matrix; $dbg_matrix = qr_matrix_apply_mask($dbg_matrix, $qmm_mask_number);
+		//qr_format_apply($dbg_matrix, "H", $qmm_mask_number); var_dump(ascii_print2($dbg_matrix));
+		//DEBUG
 		if($qmm_aux_score < $qmm_min_score)
 		{
 			$qr_data_mask = $qmm_mask_number;
