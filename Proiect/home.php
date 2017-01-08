@@ -12,16 +12,19 @@
 				<h1 class ="banner_title">Lorem Ipsum</h1>
 			</header>
 			<section id = "new_section">
+			<br/><br/><br/>
 				<div id="new_button">NEW</div>
 			</section>
 			<section id ="join_section">
 				<!-- <div  id ="join_button">JOIN</div><br/> -->
+				<br/><br/><br/>
 				<form action="pagina.php" onsubmit="return js_validate()" method="post">
-
+				
 				Id Conversatie:
-				<input type="text" name="idConversatie" id="idConversatie" onchange="js_validate()"><br/>
+				<input type="text" name="idConversatie" id="idConversatie" onchange="js_validate()"><br/><br/>
+
 				Nickname:
-				<input type="text" name="nickName" id="nickName" onchange="js_validate()"><br/>
+				<input type="text" name="nickName" id="nickName" onchange="js_validate()"><br/><br/>
 				<input type="hidden" name="isValidJoin" value="0"/>
 				<input type="submit" name="join_button" id="join_button" value="JOIN"/> 					
 				</form>
