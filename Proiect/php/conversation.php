@@ -19,6 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET")
 
 <?php
 
+
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 	if(isset($_POST["conv_exist"]))
@@ -27,8 +28,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 		echo $ce?"1":"0";
 		//var_dump($_POST);
 	}
+	if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["adminName"]))
+	{
+		$pswd = $_POST["pswd"];
+		$convName = $_POST["conversationName"];
+		$dminName = $_POST["adminName"];
+		conv_create($pswd,$convName,$adminName);
+	}
 };
-
 
 /*!
  * @brief genereaza un ID nou pentru conversatie
@@ -66,7 +73,7 @@ function conv_exist($uid)
 * @brief Creeaza o noua conversatie cu parametrii dati 
 * @param $admin_pass parola administratorului
 */
-function conv_create($admin_pass)
+function conv_create($admin_pass, $conv_title ,$adminName)
 {
 	$cc_uid = conv_gen_uid();
 	if($cc_uid == "")
@@ -97,6 +104,8 @@ function conv_create($admin_pass)
 	$cc_xml_conf = $cc_xml_conf . '<root>' . $cc_endl;
 	$cc_xml_conf = $cc_xml_conf . '<creation_date>' . $timestamp . '</creation_date>' . $cc_endl;
 	$cc_xml_conf = $cc_xml_conf . '<admin_pass>' . $admin_pass . '</admin_pass>' . $cc_endl;
+	$cc_xml_conf = $cc_xml_conf . '<admin_name>' . $adminName . '</admin_name>' . $cc_endl;
+	$cc_xml_conf = $cc_xml_conf . '<title>' . $conv_title . '</title>' . $cc_endl;
 	$cc_xml_conf = $cc_xml_conf . '</root>' . $cc_endl;
 
 	fwrite($cc_file_conf, $cc_xml_conf);
@@ -108,7 +117,9 @@ function conv_create($admin_pass)
 	fwrite($cc_file_log, $cc_xml_log);
 	fclose($cc_file_log);
 }
-/*!
+
+
+/*     Nu e nevoie de asta!
 * @brief updateaza fisierul de configurare al conversatiei 
 * Fisierul config.xml din directorul conversatie este updatat 
 * astfel incat sa contina noile valori de configuratie date ca 
@@ -116,7 +127,6 @@ function conv_create($admin_pass)
 * @param $uid ID-ul conversatiei
 * @param $admin_pass parola administratorului
 * @param $timestamp data de creare a conversatiei
-*/
 function conv_update_config($uid, $admin_pass, $timestamp)
 {
 	$cu_file_base = "logs/conv_" . $uid;
@@ -134,4 +144,5 @@ function conv_update_config($uid, $admin_pass, $timestamp)
 	$cu_xml->asXML($cu_file_base . '/config.xml');
 
 }
+*/
 ?>
