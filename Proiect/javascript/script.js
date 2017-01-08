@@ -58,6 +58,8 @@ function js_validate($elem)
 		if (this.readyState == 4 && this.status == 200) {
 			var input_conv = document.getElementById("idConversatie");
 			var vj =  document.getElementById("isValidJoin");
+			dr = document.getElementById("reqStr");
+			dr.innerHTML = this.responseText.toString();
 			if(this.responseText == "1")
 			{
 				input_conv =  js_validate_set_state(input_conv, true);
@@ -102,7 +104,7 @@ function js_validate($elem)
 		}
 	}
 	
-	//alert(vj.value);
+	alert(vj.value);
 	if(vj.value != 3)
 	{
 		return false;
@@ -112,3 +114,6 @@ function js_validate($elem)
 		return true;
 	}
 }
+
+
+
