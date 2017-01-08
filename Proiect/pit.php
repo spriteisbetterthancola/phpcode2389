@@ -22,33 +22,39 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 		die ("No User Name!<b>");
 	}
 }
+
+$conv_uid = 0;
+$usr_name = 0;
+
 ?>
 <html>
 	<head>
-		
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="css/w3.css">
 	</head>
 	<body>
 	<form action="return false;">
-		<input type="hidden" name="nickName" value=<?php echo '"' . $usr_name . '"' ?>/>
+		<input type="hidden" name="nickName" value=<?php echo '"' . $usr_name . '"'?>/>
 		<input type="hidden" name="idConversatie" value=<?php echo '"' . $conv_uid . '"' ?>/>
 	</form>
 		<main> <section>
-			<header><section>
-				HEADER		
-			</section></header>
-			<aside>
-				<section>
-					Lorem Ipsum Aside
-				</section>
-			</aside>
-			<section>
-				<section>
-					Main Chat boddy
+			<header class="w3-container w3-theme w3-padding w3-center">
+				<h1 class ="w3-animate-bottom w3-xxxlarge">Lowerthyi ghhui</h1>
+			</header>
+
+			<section class =" w3-container">
+				<section class ="w3-card-2 w3-padding w3-group" style="height:450px;">
+				<div class="message">
+					<p class="msg-body">
+				</div>
+					<p style="color: blue;text-align: left;display: left">Hello<br/><i>12:12:22&nbsp; Admin:</i></p>
+					<p style="color: green;text-align:right"> Salut<br/> <i> 1:23:09 &nbsp; Florin:</i></p>
 				</section>
 			</section>
-			<footer><section>
-				Footer - f.subtire (ascuns pe mobil)
-			</section></footer>
 		</section></main>
+		<footer class="w3-container w3-theme w3-padding w3-center">
+			&copy;TI PROIECT 2017
+		</footer>
+	
 	</body>
 </html>
