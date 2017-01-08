@@ -1,0 +1,15 @@
+		/*for header*/
+
+.w3-container{padding:0.01em 16px} 
+.w3-padding{padding:8px 16px!important}
+.w3-theme {color:#fff !important; background-color:#000000 !important}
+.w3-centered tr th,.w3-centered tr td{text-align:center} /* div-ul din interiorul headerului*/
+/*body*/
+.w3-content{max-width:980px;margin:auto}
+/*div din body*/
+h1{
+    font-weight: 400;
+    margin: 10px 0;
+    font-family: "Segoe UI",Arial,sans-serif;
+    display: block;
+}
