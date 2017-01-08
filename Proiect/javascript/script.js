@@ -48,11 +48,11 @@ function js_validate_set_state(elem, isValid)
 
 
 
-function js_validate()
+function js_validate($elem)
 {
 	//Verifica daca Sectiunea de Join de pe pagina Home este completata corect
 	var input_conv = document.getElementById("idConversatie");
-	var vj =  document.getElementById("isValidJoin");
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -61,45 +61,54 @@ function js_validate()
 			if(this.responseText == "1")
 			{
 				input_conv =  js_validate_set_state(input_conv, true);
-				var nick_conv = document.getElementById("nickName");
 				vj.value = vj.value | 1;
 			}
 			else
 			{
 				input_conv = js_validate_set_state(input_conv, false);
-				if(vj.value % 2 == 1)
+				/*if(vj.value % 2 == 1)
 				{
 					vj.value = vj.value - 1;
-				}
+				}*/
+				vj.value = vj.value & 2;
 			}
 		}
 	};
-	reqString = "php/conversation.php";//80bf99c
-	reqString = reqString;
-	xhttp.open("POST", reqString, true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("conv_exist=" + input_conv.value);
 
-	var input_nick = document.getElementById("nickName");
-	if(input_nick.value == "")//TODO vezi daca numele introdus e valid
+	var vj =  document.getElementById("isValidJoin");
+	if($elem == input_conv)
 	{
-		input_nick = js_validate_set_state(input_nick, false);
-		if((vj.value & 2) != 0){
-			vj.value = vj.value - 2;
+		reqString = "php/conversation.php";//80bf99c
+		reqString = reqString;
+		xhttp.open("POST", reqString, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("conv_exist=" + input_conv.value);
+	}
+	else {
+		var input_nick = document.getElementById("nickName");
+		if(input_nick.value == "")//TODO vezi daca numele introdus e valid
+		{
+			input_nick = js_validate_set_state(input_nick, false);
+			
+			/*if((vj.value & 2) != 0){
+				vj.value = vj.value - 2;
+			}*/
+			vj.value = vj.value & 1;
+		}
+		else
+		{
+			input_nick = js_validate_set_state(input_nick, true);
+			vj.value = vj.value | 2;
 		}
 	}
-	else
-	{
-		input_nick = js_validate_set_state(input_nick, true);
-		vj.value = vj.value | 2;
-	}
-
-	if(vj.value == 3)
-	{
-		return true;
-	}
-	else
+	
+	//alert(vj.value);
+	if(vj.value != 3)
 	{
 		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
