@@ -17,28 +17,26 @@
 			</section>
 			<section id ="join_section">
 				<!-- <div  id ="join_button">JOIN</div><br/> -->
-<<<<<<< HEAD
+
 				<!-- <form action="pit.php" onsubmit="return js_validate(this)" method="post"> -->
 				<form action="pit.php" onsubmit="return js_validate(this);" method="post">
 
-
+<!--
 				Id Conversatie:
 				<input type="text" name="idConversatie" id="idConversatie" onchange="js_validate(this)"><br/>
 				Nickname:
 				<input type="text" name="nickName" id="nickName" onchange="js_validate(null)"><br/>
 				<input type="hidden" name="isValidJoin" id="isValidJoin" value="0"/>
-=======
+-->
 				<br/><br/><br/>
-				<form action="pagina.php" onsubmit="return js_validate()" method="post">
+				<form action="pagina.php" onsubmit="return js_validate(this)" method="post">
 				
 				Id Conversatie:
-				<input type="text" name="idConversatie" id="idConversatie" onchange="js_validate()"><br/><br/>
+				<input type="text" name="idConversatie" id="idConversatie" onchange="js_validate(this)"><br/><br/>
 
 				Nickname:
-				<input type="text" name="nickName" id="nickName" onchange="js_validate()"><br/><br/>
-				<input type="hidden" name="isValidJoin" value="0"/>
->>>>>>> 1cc5fca222a414f546c2bfd106ed6d4d2acd42bd
-				<input type="submit" name="join_button" id="join_button" value="JOIN"/> 					
+				<input type="text" name="nickName" id="nickName" onchange="js_validate(this)"><br/><br/>
+				<input type="hidden" name="isValidJoin" id="isValidJoin" value="0"/>
 				</form>
 			</section>
 		</main>
