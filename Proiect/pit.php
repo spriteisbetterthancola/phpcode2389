@@ -26,14 +26,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 }
 
 //$conv_uid = 0;
-$usr_name = 0;
-$numeAdmin = 0;
+//$usr_name = 0;
+//$numeAdmin = 0;
 
 ?>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/w3.css">
+		<script type="text/javascript" src="javascript/xmlparser.js"></script>
 	</head>
 	<body>
 	
@@ -43,7 +44,7 @@ $numeAdmin = 0;
 		<input type="hidden" name="numeAdmin"  id ="nA" value=<?php echo '"' . get_admin_name($conv_uid) . '"' ?>/>
 
 	</form>
-	<div id="diva_lu_ana"></div>
+	<div id="diva_lu_ana">Diva Lu Ana</div>
 		<main> <section>
 			<header class="w3-container w3-theme w3-padding w3-center">
 				<h1 class ="w3-animate-top w3-xxxlarge">Conversation Title</h1>
@@ -87,7 +88,7 @@ $numeAdmin = 0;
 </section>
 
 <section id="send-box" class="w3-panel">
-    <form class="w3-panel w3-row w3-display-container" action="" onsubmit="false;">
+    <form class="w3-panel w3-row w3-display-container" action="" onsubmit="return false;">
     	<input type="text" class="w3-input w3-threequarter w3-display-left" name="msg_text"/>
     	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn" value="SEND" onclick="cnv_get_conversation();" />
     </form>
