@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<pre>
+<?php var_dump($_POST);
+?>
+</pre>
 <?php 
 //Seteaza variabilele de sesiune
 require_once("php/conversation.php");
@@ -22,6 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 	else {
 		die ("No User Name!<b>");
 	}
+//Tot aici trebuie sa creem o noua conversatie daca este necesar
 }
 
 $conv_uid = 0;
@@ -37,6 +42,7 @@ $usr_name = 0;
 	<form action="return false;">
 		<input type="hidden" name="nickName" value=<?php echo '"' . $usr_name . '"'?>/>
 		<input type="hidden" name="idConversatie" value=<?php echo '"' . $conv_uid . '"' ?>/>
+
 	</form>
 		<main> <section>
 			<header class="w3-container w3-theme w3-padding w3-center">

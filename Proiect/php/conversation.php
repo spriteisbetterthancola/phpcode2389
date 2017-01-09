@@ -6,36 +6,8 @@
 
 //var_dump(conv_update_config("80bf99c", "parola", time()));
 //var_dump(conv_exist("80bf99c"));
-/*
-if($_SERVER['REQUEST_METHOD'] == "GET")
-{
-	if(isset($_GET["conv_exist"]))
-	{
-		echo conv_exist($_GET["conv_exist"]);
-	}
-}
-*/
 ?>
-
 <?php
-
-
-if($_SERVER['REQUEST_METHOD'] == "POST")
-{
-	if(isset($_POST["conv_exist"]))
-	{
-		$ce =  conv_exist($_POST["conv_exist"]);
-		echo $ce?"1":"0";
-		//var_dump($_POST);
-	}
-	if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["adminName"]))
-	{
-		$pswd = $_POST["pswd"];
-		$convName = $_POST["conversationName"];
-		$dminName = $_POST["adminName"];
-		conv_create($pswd,$convName,$adminName);
-	}
-};
 
 /*!
  * @brief genereaza un ID nou pentru conversatie
@@ -85,6 +57,7 @@ function conv_create($admin_pass, $conv_title ,$adminName)
 			return;
 		}
 	}
+
 	$cc_file_base = "logs/conv_" . $cc_uid;
 	mkdir($cc_file_base);
 	//TODO Creare fisier config si fisier log.txt
@@ -116,6 +89,7 @@ function conv_create($admin_pass, $conv_title ,$adminName)
 	$cc_xml_log .= "<conversation></conversation>" . $cc_endl;
 	fwrite($cc_file_log, $cc_xml_log);
 	fclose($cc_file_log);
+	return $cc_uid;
 }
 
 

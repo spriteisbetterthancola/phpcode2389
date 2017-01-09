@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<?php
+$conv_uid = "";
+
+if($_SERVER['REQUEST_METHOD'] == "GET") {
+	if(isset($_GET['id'])) {
+		$conv_uid = htmlspecialchars($_GET['id']);
+		if (strlen($conv_uid) > 10) {
+			$conv_uid = "";
+		}
+	}
+}
+?>
 <html>
 	<head>
 		<title> Home </title>
@@ -21,7 +33,7 @@
 					  onsubmit="return js_validate(this);" method="post" name ="join_form">
 								<div class="w3-group">
 									<input class="w3-input " type ="text" required="required" name="idConversatie"  id="idConversatie"
-									onchange="js_validate(this)" id="idConversatie">
+									onchange="js_validate(this)" id="idConversatie" value="<?php echo $conv_uid; ?>">
 									<label class="w3-label w3-validate">Id conversație</label>
 								</div>
 
@@ -32,7 +44,7 @@
 								</div>
 
 								<div class="w3-group">
-									<input type="hidden" name="isValidJoin" id="isValidJoin" value="0"/>
+									<input type="hidden" name="isValidJoin" id="isValidJoin" value="<?php echo (int)($conv_uid != "") ?>"/>
 									<input type="submit" class="w3-btn" name="join" id="join" value="Join"/>
 								</div>	
 					  </form>
@@ -45,7 +57,7 @@
 			<head id="join-head">
 					<h3 class="w3-teal w3-padding-top">New Conversation</h3>
 					<section id="join-form-wrapper" class="w3-row-padding w3-center">
-					  <form class="w3-panel" style="border: 0px solid !important;"  action="pagina.php" 
+					  <form class="w3-panel" style="border: 0px solid !important;"  action="php/conv_create.php" 
 					  onsubmit="return js_validate_new(this);" method="post">
 								<div class="w3-group">
 									<input class="w3-input" type ="text" required="required" name ="conversationName" 
@@ -60,7 +72,7 @@
 								</div>
 
 								<div class="w3-group">
-									<input class="w3-input" type ="text" required="required"  name="pswd" 
+									<input class="w3-input" type ="password" required="required"  name="pswd" 
 									onchange="js_validate_new(this)" id="passwordInput">
 									<label class="w3-label w3-validate">Parola</label>
 								</div>
