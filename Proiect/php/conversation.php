@@ -32,6 +32,7 @@ function conv_gen_uid()
 	
 	return $aux;
 }
+
 /*!
 * @brief Verifica daca conversatia cu ID-ul $uid exista
 * @param $uid ID-ul conversatiei
@@ -119,4 +120,10 @@ function conv_update_config($uid, $admin_pass, $timestamp)
 
 }
 */
+function get_admin_name($conv_uid)
+{
+	$cu_xml = simplexml_load_file("log/conv_$conv_uid ". '/config.xml');
+	return ($cu_xml->admin_name[0]);
+}
 ?>
+

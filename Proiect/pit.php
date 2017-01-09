@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<pre>
-<?php var_dump($_POST);
-?>
-</pre>
 <?php 
 //Seteaza variabilele de sesiune
 require_once("php/conversation.php");
@@ -29,8 +25,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 //Tot aici trebuie sa creem o noua conversatie daca este necesar
 }
 
-$conv_uid = 0;
+//$conv_uid = 0;
 $usr_name = 0;
+$numeAdmin = 0;
 
 ?>
 <html>
@@ -39,20 +36,23 @@ $usr_name = 0;
 		<link rel="stylesheet" type="text/css" href="css/w3.css">
 	</head>
 	<body>
+	
 	<form action="return false;">
-		<input type="hidden" name="nickName" value=<?php echo '"' . $usr_name . '"'?>/>
-		<input type="hidden" name="idConversatie" value=<?php echo '"' . $conv_uid . '"' ?>/>
+		<input type="hidden" name="nickName" id="nN" value=<?php echo '"' . $usr_name . '"'?>/>
+		<input type="hidden" name="idConversatie" id ="iC" value=<?php echo '"' . $conv_uid . '"' ?>/>
+		<input type="hidden" name="numeAdmin"  id ="nA" value=<?php echo '"' . get_admin_name($conv_uid) . '"' ?>/>
 
 	</form>
+	<div id="diva_lu_ana"></div>
 		<main> <section>
 			<header class="w3-container w3-theme w3-padding w3-center">
 				<h1 class ="w3-animate-top w3-xxxlarge">Conversation Title</h1>
 			</header>
-<section class ="w3-container" id="msg-box">
+<section class ="w3-container" >
 
 
 
-  <section class ="w3-container w3-card-4 w3-padding-top" style="height:450px;">
+  <section class ="w3-container w3-card-4 w3-padding-top" style="height:450px;" id="msg-box">
 
 <section class="w3-container">
   <section class="w3-row w3-left w3-padding-0 ">
@@ -66,7 +66,7 @@ $usr_name = 0;
 
 <section class="w3-container">
   <section class="w3-row w3-left w3-padding-0 ">
-    <section class="w3-right w3-small"><b>UserName</b></section>
+    <section class="w3-right w3-small" ><b>UserName</b></section>
     <section class="w3-left w3-padding-right w3-tiny"><i>23:59:59</i></section>
   </section><br/>
   <section class="w3-row w3-left w3-padding-0 w3-margin-0">
@@ -89,7 +89,7 @@ $usr_name = 0;
 <section id="send-box" class="w3-panel">
     <form class="w3-panel w3-row w3-display-container" action="" onsubmit="false;">
     	<input type="text" class="w3-input w3-threequarter w3-display-left" name="msg_text"/>
-    	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn" value="SEND"/>
+    	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn" value="SEND" onclick="cnv_get_conversation();" />
     </form>
 </section>
 
