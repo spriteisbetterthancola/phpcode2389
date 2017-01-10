@@ -99,6 +99,7 @@ function cnv_push_msg($conv_uid, $usr_nick, $usr_msg)
 {
 	$cpm_file_log_name = "logs/conv_" . $conv_uid . "/log.xml";
 	$cpm_xml = simplexml_load_file($cpm_file_log_name);
+	echo $cpm_xml->asXML();
 	//$cpm_xml->addChild("new_child", "nc_value");
 	$cpm_msg = $cpm_xml->addChild("message");
 	$cpm_timestamp;

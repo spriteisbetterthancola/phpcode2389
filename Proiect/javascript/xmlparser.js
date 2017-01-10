@@ -11,13 +11,13 @@ xhttp.onreadystatechange = function() {
     }
 };
 
-var xml_name = "/php/logs/conv_"+document.getElementById("iC").value + "/log.xml";
+var xml_name = "/php/logs/conv_" + document.getElementById("iC").value + "/log.xml";
 //document.getElementById("diva_lu_ana").innerHTML = xml_name;
 xhttp.open("GET", xml_name, true);
 xhttp.send();
 }
 
-function   cnv_display_mesage_from_xml (elem)
+function cnv_display_mesage_from_xml (elem)
 {	
 	var messages = elem.getElementsByTagName("message");
 	var sectiune = "";
@@ -59,4 +59,27 @@ function   cnv_display_mesage_from_xml (elem)
 		sectiune +="<br>";
 	}
 	document.getElementById("msg-box").innerHTML = sectiune;
+}
+
+function send_message(){
+	var x = document.getElementById("msg_text").value;
+	var uid = document.getElementById("iC").value;
+	var nn = document.getElementById("nN").value;
+	if(x!="")
+	{
+	var xhttp = new XMLHttpRequest();
+	var reqString = "php/chat_v2.php";
+		
+		xhttp.open("POST", reqString, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("conv_uid="+uid+"&nick_name="+nn+"&msg="+x );
+	}
+    cnv_get_conversation();
+    document.getElementById("msg_text").value = "";
+		/*xhttp.onreadystatechange = function() {
+			
+    if (this.readyState == 4 && this.status == 200) {
+    	document.getElementById("diva_lu_ana").innerHTML = this.responseText;
+    }
+};*/
 }

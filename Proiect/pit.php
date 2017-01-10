@@ -44,6 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 		<input type="hidden" name="numeAdmin"  id ="nA" value=<?php echo '"' . get_admin_name($conv_uid) . '"' ?>/>
 
 	</form>
+	<script>	window.setInterval(cnv_get_conversation, 1500);//Refresh chat la fiecare 2.5 s	</script>
 	<div id="diva_lu_ana">Diva Lu Ana</div>
 		<main> <section>
 			<header class="w3-container w3-theme w3-padding w3-center">
@@ -53,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 
 
 
-  <section class ="w3-container w3-card-4 w3-padding-top" style="height:450px;" id="msg-box">
+  <section class="w3-container w3-card-4 w3-padding-top" style="height:450px; overflow: scroll;" id="msg-box">
 
 <section class="w3-container">
   <section class="w3-row w3-left w3-padding-0 ">
@@ -89,8 +90,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 
 <section id="send-box" class="w3-panel">
     <form class="w3-panel w3-row w3-display-container" action="" onsubmit="return false;">
-    	<input type="text" class="w3-input w3-threequarter w3-display-left" name="msg_text"/>
-    	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn" value="SEND" onclick="cnv_get_conversation();" />
+    	<input type="text" class="w3-input w3-threequarter w3-display-left" id="msg_text"/>
+    	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn"  id ="SEND"value="SEND" onclick="send_message();" />
     </form>
 </section>
 
