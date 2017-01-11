@@ -124,4 +124,10 @@ function get_admin_name($conv_uid)
 	$cu_xml = simplexml_load_file("php/logs/conv_" . $conv_uid . '/config.xml');
 	return ($cu_xml->admin_name[0]);
 }
+
+function get_conv_name($conv_uid)
+{
+	$cu_xml = simplexml_load_file("php/logs/conv_" . $conv_uid . '/config.xml');
+	return ($cu_xml->title[0]);
+}
 ?>

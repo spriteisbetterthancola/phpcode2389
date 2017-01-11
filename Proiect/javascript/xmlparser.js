@@ -37,23 +37,23 @@ function cnv_display_mesage_from_xml (elem)
 
 		if(sender == admin)
 		{
-				sectiune += "<section class=\"w3-container\"><section class=\"w3-row w3-left w3-padding-0 \">" ;
-  		sectiune+="<section class=\"w3-right w3-small w3-text-red\"><b>"+admin + "</b></section><section class=\"w3-left w3-padding-right w3-tiny\"><i>"+tms +"</i></section></section><br/>";
-		sectiune += "<section class=\"w3-row w3-left w3-padding-0 w3-margin-0\"><article class=\"w3-padding w3-amber\">"+body_m+ "</article </section></section>";
+			sectiune += "<section class=\"css-container\"><section class=\"css-row css-left css-padding-0 \">" ;
+  			sectiune+="<section class=\"css-right css-small css-text-red\"><b>"+admin + "</b></section><section class=\"css-left css-padding-right css-tiny\"><i>"+tms +"</i></section></section><br/>";
+			sectiune += "<section class=\"css-row css-left css-padding-0 css-margin-0\"><article class=\"css-padding css-amber\">"+body_m+ "</article </section></section>";
 		}
 		else{
 		if(sender == nickname)
 		{
-					sectiune += "<section class=\"w3-container\"><section class=\"w3-row w3-right w3-padding-0 \">" ;
-			sectiune +="<section class=\"w3-right w3-tiny\"><i>"+ tms +"</i></section>";
-			sectiune += "</section><br/><section class=\"w3-row w3-right w3-padding-0 w3-margin-0\"><article class=\"w3-padding w3-pale-blue\"> "+body_m +"</article> </section><br/> </section>";
+			sectiune += "<section class=\"css-container\"><section class=\"css-row css-right css-padding-0 \">" ;
+			sectiune +="<section class=\"css-right css-tiny\"><i>"+ tms +"</i></section>";
+			sectiune += "</section><br/><section class=\"css-row css-right css-padding-0 css-margin-0\"><article class=\"css-padding css-pale-blue\"> "+body_m +"</article> </section><br/> </section>";
 		}
 		else
 		{
-					sectiune += "<section class=\"w3-container\"><section class=\"w3-row w3-left w3-padding-0 \">" ;
-			sectiune +="<section class=\"w3-right w3-small\" ><b>"+sender+"</b></section>";
-		    sectiune += "<section class=\"w3-left w3-padding-right w3-tiny\"><i>"+ tms + "</i></section></section><br/><section class=\"w3-row w3-left w3-padding-0 w3-margin-0\">";
-			sectiune +=  "<article class=\"w3-padding w3-pale-green\">"+ body_m + "</article></section></section>";
+			sectiune += "<section class=\"css-container\"><section class=\"css-row css-left css-padding-0 \">" ;
+			sectiune +="<section class=\"css-right css-small\" ><b>"+sender+"</b></section>";
+		    sectiune += "<section class=\"css-left css-padding-right css-tiny\"><i>"+ tms + "</i></section></section><br/><section class=\"css-row css-left css-padding-0 css-margin-0\">";
+			sectiune +=  "<article class=\"css-padding css-pale-green\">"+ body_m + "</article></section></section>";
 		}
 	}
 		sectiune +="<br>";
@@ -70,14 +70,20 @@ function send_message(){
 	var xhttp = new XMLHttpRequest();
 	var reqString = "php/chat_v2.php";
 		
-		xhttp.open("POST", reqString, true);
+		xhttp.open("POST", reqString, false);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("conv_uid="+uid+"&nick_name="+nn+"&msg="+x );
 	}
-    cnv_get_conversation();
+    
+    var sectiune = "<br/><section class=\"css-container\"><section class=\"css-row css-right css-padding-0 \">";
+	sectiune +="<section class=\"css-right css-tiny\"><i>"+ "12:20:30" +"</i></section>";
+	sectiune += "</section><br/><section class=\"css-row css-right css-padding-0 css-margin-0\"><article class=\"css-padding css-pale-blue\"> "+ document.getElementById("msg_text").value +"</article> </section><br/> </section>";
+    document.getElementById("msg-box").innerHTML += sectiune;
     document.getElementById("msg_text").value = "";
+    //cnv_get_conversation();
+	
 		/*xhttp.onreadystatechange = function() {
-			
+
     if (this.readyState == 4 && this.status == 200) {
     	document.getElementById("diva_lu_ana").innerHTML = this.responseText;
     }

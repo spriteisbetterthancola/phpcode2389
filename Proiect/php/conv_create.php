@@ -9,6 +9,7 @@ if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["a
 		$adminName = $_POST["adminName"];
 		$conv_uid = conv_create($pswd, $convName, $adminName);
 	}
+	$host_name = "192.168.43.249";//In productie  $_SERVER["SERVER_ADDR"] returneaza adresa sub forma www.host.com
 ?>
 
 <body>
@@ -16,15 +17,14 @@ if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["a
 	<h2>ID-ul conversatie este <b><?php echo $conv_uid ?></b></h2>
 	Cod conversatie:
 	<br/>
-	<img src="gen_qr.php?text=http://<?php echo $_SERVER["HTTP_HOST"] ?>/index.php?id=<?php echo $conv_uid ?>">
+	<img src="gen_qr.php?text=http://<?php echo $host_name ?>/index.php?id=<?php echo $conv_uid ?>">
 	<br/>
 	<button >
 	<h3>Imagine disponibila la alte dimensiuni:</h3>
 	<?php
 	for($i=1; $i<80; $i=$i+3)
 	{
-		$host = $_SERVER["HTTP_HOST"];
-		echo '<a href="gen_qr.php?text=http://' . $host . '/index.php?id=' . $conv_uid . '&module_size=' . $i . '">';
+		echo '<a href="gen_qr.php?text=http://' . $host_name . '/index.php?id=' . $conv_uid . '&module_size=' . $i . '">';
 		echo 33*$i ;
 		echo "x" ;
 		echo 33*$i; 
