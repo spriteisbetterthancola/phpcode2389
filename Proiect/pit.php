@@ -54,39 +54,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 
 
 
-  <section class="css-container css-card-4 css-padding-top" style="height:450px; overflow: scroll;" id="msg-box">
+  <section class="css-container css-card-4 css-padding-top" style="height:450px; overflow: scroll;" id="msg-box"></section>
 
-<section class="css-container">
-  <section class="css-row css-left css-padding-0 ">
-    <section class="css-right css-small css-text-red"><b>Admin</b></section>
-    <section class="css-left css-padding-right css-tiny"><i>23:59:59</i></section>
-  </section><br/>
-  <section class="css-row css-left css-padding-0 css-margin-0">
-  	<article class="css-padding css-amber">Hello World</article>
-  </section>
-</section><br/>
 
-<section class="css-container">
-  <section class="css-row css-left css-padding-0 ">
-    <section class="css-right css-small" ><b>UserName</b></section>
-    <section class="css-left css-padding-right css-tiny"><i>23:59:59</i></section>
-  </section><br/>
-  <section class="css-row css-left css-padding-0 css-margin-0">
-  	<article class="css-padding css-pale-green">Hello World</article>
-  </section>
-</section><br/>
 
-<section class="css-container">
-  <section class="css-row css-right css-padding-0 ">
-    <section class="css-right css-tiny"><i>23:59:59</i></section>
-  </section><br/>
-  <section class="css-row css-right css-padding-0 css-margin-0">
-  	<article class="css-padding css-pale-blue">Hello World</article>
-  </section><br/>
+
+
 
   
-</section><br/>
-</section>
+
 
 <section id="send-box" class="css-panel">
     <form class="css-panel css-row css-display-container" action="" onsubmit="return false;">
