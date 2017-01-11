@@ -9,6 +9,7 @@ if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["a
 		$adminName = $_POST["adminName"];
 		$conv_uid = conv_create($pswd, $convName, $adminName);
 	}
+	//TODO de modificat IP-ul 
 	$host_name = "192.168.43.249";//In productie  $_SERVER["SERVER_ADDR"] returneaza adresa sub forma www.host.com
 ?>
 
