@@ -6,8 +6,7 @@
 
 //var_dump(conv_update_config("80bf99c", "parola", time()));
 //var_dump(conv_exist("80bf99c"));
-?>
-<?php
+?><?php
 
 /*!
  * @brief genereaza un ID nou pentru conversatie
@@ -126,4 +125,3 @@ function get_admin_name($conv_uid)
 	return ($cu_xml->admin_name[0]);
 }
 ?>
-
