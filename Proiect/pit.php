@@ -33,7 +33,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<!--<link rel="stylesheet" type="text/css" href="css/w3.css"> -->
 		<link rel="stylesheet" type="text/css" href="css/customize_style.css">
 		<script type="text/javascript" src="javascript/xmlparser.js"></script>
 	</head>
@@ -48,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 	<script>	window.setInterval(cnv_get_conversation, 1500);//Refresh chat la fiecare 2.5 s	</script>
 	<div id="diva_lu_ana">Diva Lu Ana</div>
 		<main> <section>
-			<header class="css-container css-theme css-padding css-center">
+			<header class="css-container css-teal css-padding css-center">
 				<h1 class ="css-animate-top css-xxxlarge">Conversation Title</h1>
 			</header>
 <section class ="css-container" >
