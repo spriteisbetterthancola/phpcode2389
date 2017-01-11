@@ -33,7 +33,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/w3.css">
+		<!--<link rel="stylesheet" type="text/css" href="css/w3.css"> -->
+		<link rel="stylesheet" type="text/css" href="css/customize_style.css">
 		<script type="text/javascript" src="javascript/xmlparser.js"></script>
 	</head>
 	<body>

@@ -15,7 +15,8 @@ if($_SERVER['REQUEST_METHOD'] == "GET") {
 	<head>
 		<title> Home </title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/w3.css">
+		
+		<link rel="stylesheet" type="text/css" href="css/w3.css"> 
 		<script type="text/javascript" src="javascript/script.js"></script>
 
 	</head>

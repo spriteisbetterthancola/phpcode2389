@@ -18,6 +18,7 @@ if(isset($_POST["pswd"]) && isset($_POST["conversationName"]) && isset($_POST["a
 	<br/>
 	<img src="gen_qr.php?text=http://<?php echo $_SERVER["HTTP_HOST"] ?>/index.php?id=<?php echo $conv_uid ?>">
 	<br/>
+	<button >
 	<h3>Imagine disponibila la alte dimensiuni:</h3>
 	<?php
 	for($i=1; $i<80; $i=$i+3)
