@@ -2,6 +2,7 @@
 <?php
 $conv_uid = "";
 
+date_default_timezone_set("Europe/Bucharest");
 if($_SERVER['REQUEST_METHOD'] == "GET") {
 	if(isset($_GET['id'])) {
 		$conv_uid = htmlspecialchars($_GET['id']);
@@ -35,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET") {
 					  onsubmit="return js_validate(this);" method="post" name ="join_form">
 								<div class="css-group">
 									<input class="css-input " type ="text" required="required" name="idConversatie"  id="idConversatie"
-									onchange="js_validate(this)" id="idConversatie" value="<?php echo $conv_uid; ?>">
+									onchange="js_validate(this)" id="idConversatie" value="<?php echo $conv_uid; ?>" autocomplete="off">
 									<label class="css-label css-validate">Id conversație</label>
 								</div>
 

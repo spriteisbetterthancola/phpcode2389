@@ -29,7 +29,11 @@ function cnv_display_mesage_from_xml (elem)
 	for( i= 0;i<messages.length;i++)
 	{
 
-		tms =messages[i].getElementsByTagName("timestamp")[0].childNodes[0].nodeValue;
+		tmStamp = messages[i].getElementsByTagName("timestamp")[0].childNodes[0].nodeValue;
+		tmStamp = tmStamp * 1000;//PHP returneaza ts in secunde si JS in milisecunde
+		d = new Date(parseInt(tmStamp));
+		tms = d.getHours() + " : " + d.getMinutes() + " : " + d.getSeconds();
+
 		sender=messages[i].getElementsByTagName("sender_name")[0].childNodes[0].nodeValue;
 		body_m =messages[i].getElementsByTagName("message_body")[0].childNodes[0].nodeValue;
 
@@ -39,10 +43,9 @@ function cnv_display_mesage_from_xml (elem)
 		{
 			sectiune += "<section class=\"css-container\"><section class=\"css-row css-left css-padding-0 \">" ;
   			sectiune+="<section class=\"css-right css-small css-text-red\"><b>"+admin + "</b></section><section class=\"css-left css-padding-right css-tiny\"><i>"+tms +"</i></section></section><br/>";
-			sectiune += "<section class=\"css-row css-left css-padding-0 css-margin-0\"><article class=\"css-padding css-amber\">"+body_m+ "</article </section></section>";
+			sectiune += "<section class=\"css-row css-left css-padding-0 css-margin-0\"><article class=\"css-padding css-amber\">"+ body_m + "</article </section></section>";
 		}
-		else{
-		if(sender == nickname)
+		else if(sender == nickname)
 		{
 			sectiune += "<section class=\"css-container\"><section class=\"css-row css-right css-padding-0 \">" ;
 			sectiune +="<section class=\"css-right css-tiny\"><i>"+ tms +"</i></section>";
@@ -55,7 +58,6 @@ function cnv_display_mesage_from_xml (elem)
 		    sectiune += "<section class=\"css-left css-padding-right css-tiny\"><i>"+ tms + "</i></section></section><br/><section class=\"css-row css-left css-padding-0 css-margin-0\">";
 			sectiune +=  "<article class=\"css-padding css-pale-green\">"+ body_m + "</article></section></section>";
 		}
-	}
 		sectiune +="<br>";
 	}
 	document.getElementById("msg-box").innerHTML = sectiune;

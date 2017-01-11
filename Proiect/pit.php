@@ -65,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 
 <section id="send-box" class="css-panel">
     <form class="css-panel css-row css-display-container" action="" onsubmit="return false;">
-    	<input type="text" class="css-input css-threequarter css-display-left" id="msg_text"/>
+    	<input type="text" class="css-input css-threequarter css-display-left" id="msg_text" autocomplete="off"/>
     	<input type="submit" class="css-input css-quarter css-display-right" name="send-btn"  id ="SEND"value="SEND" onclick="send_message();" />
     </form>
 </section>

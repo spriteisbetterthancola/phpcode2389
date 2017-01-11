@@ -10,7 +10,7 @@
 
 <?php
 
-
+date_default_timezone_set("Europe/Bucharest");
 
 /*
 if($_SERVER['REQUEST_METHOD'] == "GET") #DEBUG ONLY!
@@ -103,6 +103,7 @@ function cnv_push_msg($conv_uid, $usr_nick, $usr_msg)
 	//$cpm_xml->addChild("new_child", "nc_value");
 	$cpm_msg = $cpm_xml->addChild("message");
 	$cpm_timestamp;
+	/*
 	if(isset($_SERVER['REQUEST_TIME']))
 	{
 		$cpm_timestamp = $_SERVER['REQUEST_TIME'];
@@ -111,6 +112,8 @@ function cnv_push_msg($conv_uid, $usr_nick, $usr_msg)
 	{
 		$cpm_timestamp = time();
 	}
+	*/
+	$cpm_timestamp = time();
 	$cpm_msg->addChild("message_body", $usr_msg);
 	$cpm_msg->addChild("sender_name", $usr_nick);
 	$cpm_msg->addChild("timestamp", $cpm_timestamp);
