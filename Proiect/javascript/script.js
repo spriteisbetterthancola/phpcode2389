@@ -61,7 +61,7 @@ function js_validate($elem)
 			
 			//dr = document.getElementById("reqStr");
 			//dr.innerHTML = this.responseText;
-			document.getElementById("eu").innerHTML = this.responseText;
+			//document.getElementById("eu").innerHTML = this.responseText;
 			if(this.responseText.indexOf("1") != -1)
 			{
 				input_conv =  js_validate_set_state(input_conv, true);

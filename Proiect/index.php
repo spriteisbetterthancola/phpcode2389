@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET") {
 	<header class="css-container css-teal css-padding css-center">
 		<h1 class ="css-animate-top css-xxxlarge">Meeting Pit</h1>
 	</header>
-	<div id="eu"> DiV EU </div>
+	<!-- <div id="eu"> DiV EU </div> -->
 	<section id="main-wrapper" class="css-row-padding css-center css-margin-top">
 		<section id="join-wrapper" class="css-half">
 			<section id="join-card" class="css-card-2" style="min-height:469px">

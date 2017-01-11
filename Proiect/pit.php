@@ -2,7 +2,6 @@
 <?php 
 //Seteaza variabilele de sesiune
 require_once("php/conversation.php");
-session_start();
 if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 {
 	$conv_uid = "";
@@ -45,10 +44,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 
 	</form>
 	<script>	window.setInterval(cnv_get_conversation, 1500);//Refresh chat la fiecare 2.5 s	</script>
-	<div id="diva_lu_ana">Diva Lu Ana</div>
+	<!-- <div id="diva_lu_ana">Diva Lu Ana</div> -->
 		<main> <section>
 			<header class="css-container css-teal css-padding css-center">
-				<h1 class ="css-animate-top css-xxxlarge">Conversation Title</h1>
+				<h1 class ="css-animate-top css-xxxlarge"><?php echo get_conv_name($conv_uid) ?></h1>
 			</header>
 <section class ="css-container" >
 
