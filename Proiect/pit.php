@@ -48,58 +48,58 @@ if($_SERVER['REQUEST_METHOD'] == "POST")//Provine din home.php
 	<script>	window.setInterval(cnv_get_conversation, 1500);//Refresh chat la fiecare 2.5 s	</script>
 	<div id="diva_lu_ana">Diva Lu Ana</div>
 		<main> <section>
-			<header class="w3-container w3-theme w3-padding w3-center">
-				<h1 class ="w3-animate-top w3-xxxlarge">Conversation Title</h1>
+			<header class="css-container css-theme css-padding css-center">
+				<h1 class ="css-animate-top css-xxxlarge">Conversation Title</h1>
 			</header>
-<section class ="w3-container" >
+<section class ="css-container" >
 
 
 
-  <section class="w3-container w3-card-4 w3-padding-top" style="height:450px; overflow: scroll;" id="msg-box">
+  <section class="css-container css-card-4 css-padding-top" style="height:450px; overflow: scroll;" id="msg-box">
 
-<section class="w3-container">
-  <section class="w3-row w3-left w3-padding-0 ">
-    <section class="w3-right w3-small w3-text-red"><b>Admin</b></section>
-    <section class="w3-left w3-padding-right w3-tiny"><i>23:59:59</i></section>
+<section class="css-container">
+  <section class="css-row css-left css-padding-0 ">
+    <section class="css-right css-small css-text-red"><b>Admin</b></section>
+    <section class="css-left css-padding-right css-tiny"><i>23:59:59</i></section>
   </section><br/>
-  <section class="w3-row w3-left w3-padding-0 w3-margin-0">
-  	<article class="w3-padding w3-amber">Hello World</article>
+  <section class="css-row css-left css-padding-0 css-margin-0">
+  	<article class="css-padding css-amber">Hello World</article>
   </section>
 </section><br/>
 
-<section class="w3-container">
-  <section class="w3-row w3-left w3-padding-0 ">
-    <section class="w3-right w3-small" ><b>UserName</b></section>
-    <section class="w3-left w3-padding-right w3-tiny"><i>23:59:59</i></section>
+<section class="css-container">
+  <section class="css-row css-left css-padding-0 ">
+    <section class="css-right css-small" ><b>UserName</b></section>
+    <section class="css-left css-padding-right css-tiny"><i>23:59:59</i></section>
   </section><br/>
-  <section class="w3-row w3-left w3-padding-0 w3-margin-0">
-  	<article class="w3-padding w3-pale-green">Hello World</article>
+  <section class="css-row css-left css-padding-0 css-margin-0">
+  	<article class="css-padding css-pale-green">Hello World</article>
   </section>
 </section><br/>
 
-<section class="w3-container">
-  <section class="w3-row w3-right w3-padding-0 ">
-    <section class="w3-right w3-tiny"><i>23:59:59</i></section>
+<section class="css-container">
+  <section class="css-row css-right css-padding-0 ">
+    <section class="css-right css-tiny"><i>23:59:59</i></section>
   </section><br/>
-  <section class="w3-row w3-right w3-padding-0 w3-margin-0">
-  	<article class="w3-padding w3-pale-blue">Hello World</article>
+  <section class="css-row css-right css-padding-0 css-margin-0">
+  	<article class="css-padding css-pale-blue">Hello World</article>
   </section><br/>
 
   
 </section><br/>
 </section>
 
-<section id="send-box" class="w3-panel">
-    <form class="w3-panel w3-row w3-display-container" action="" onsubmit="return false;">
-    	<input type="text" class="w3-input w3-threequarter w3-display-left" id="msg_text"/>
-    	<input type="submit" class="w3-input w3-quarter w3-display-right" name="send-btn"  id ="SEND"value="SEND" onclick="send_message();" />
+<section id="send-box" class="css-panel">
+    <form class="css-panel css-row css-display-container" action="" onsubmit="return false;">
+    	<input type="text" class="css-input css-threequarter css-display-left" id="msg_text"/>
+    	<input type="submit" class="css-input css-quarter css-display-right" name="send-btn"  id ="SEND"value="SEND" onclick="send_message();" />
     </form>
 </section>
 
 
   </main>
   <!--
-		<footer class="w3-container w3-theme w3-padding w3-center">
+		<footer class="css-container css-theme css-padding css-center">
 			&copy;TI PROIECT 2017
 		</footer>
 	-->
